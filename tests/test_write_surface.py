@@ -15,7 +15,10 @@ import json
 
 import pytest
 
-from crowsnest_muse_worker.client import CrowsnestHttpClient
+from crowsnest_muse_worker.client import (
+    MAX_JSON_NESTING_DEPTH,
+    CrowsnestHttpClient,
+)
 from crowsnest_muse_worker.config import Settings
 from crowsnest_muse_worker.errors import (
     InvalidInputError,
@@ -538,14 +541,21 @@ def test_deliver_revision_failure_after_each_step(
     assert "do not restart blindly" in str(excinfo.value)
 
 
-# --- I1 (quality): deeply nested publish body after a successful attach -----
+# --- I1/CI: deeply nested publish body after a successful attach ----------
 # The publish step's response goes through the REAL CrowsnestHttpClient
-# parsers (raw_request fake returning a ~4 KB deeply nested body), while
-# reads/attach use the recording fake. The depth failure must surface as
-# uncertainty (2xx) or a native-status refusal (409) -- never a raw
-# RecursionError -- with completed attach steps / new id preserved.
+# parsers (raw_request fake returning a deeply nested body), while
+# reads/attach use the recording fake. Deterministic in ANY environment:
+# the depth is 20x the client's explicit MAX_JSON_NESTING_DEPTH bound,
+# enforced by its iterative scan before json.loads, so this does NOT
+# rely on the decoder raising RecursionError at this depth (which
+# varies by interpreter). The failure must surface as uncertainty (2xx)
+# or a native-status refusal (409) -- never a raw RecursionError --
+# with completed attach steps / new id preserved.
 
-_NESTED_BODY = b'{"payload":' + b"[" * 2000 + b"0" + b"]" * 2000 + b"}"
+_NESTING = MAX_JSON_NESTING_DEPTH * 20
+_NESTED_BODY = (
+    b'{"payload":' + b"[" * _NESTING + b"0" + b"]" * _NESTING + b"}"
+)
 
 
 class _DepthPublishClient(FakeWriteClient):

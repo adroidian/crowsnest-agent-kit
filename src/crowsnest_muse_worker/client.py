@@ -69,6 +69,53 @@ MAX_ERROR_DETAIL_CHARS = 200
 # above this read surface's JSON payloads (projection/gig/history).
 MAX_RESPONSE_BYTES = 1_048_576
 
+# Explicit, deterministic maximum JSON nesting depth enforced at the
+# response-parsing boundary in _interpret (see
+# _json_nesting_exceeds_limit). 100 container levels is far above any
+# ordinary projection/gig/history payload for this surface, while a
+# body nested deeper than that is unusable here. The bound is checked
+# *before* json.loads and does not depend on whether the interpreter's
+# decoder happens to raise RecursionError at a given depth (that
+# threshold varies by environment, which made the old
+# RecursionError-only handling non-deterministic in CI).
+MAX_JSON_NESTING_DEPTH = 100
+
+
+def _json_nesting_exceeds_limit(raw: bytes) -> bool:
+    """True iff *raw*'s JSON container nesting exceeds the bound.
+
+    Iterative byte scan: depth is incremented on ``[``/``{`` and
+    decremented on ``]``/``}`` only outside strings; brackets inside a
+    string, and a quote preceded by a backslash escape, do not count.
+    Scanning bytes is safe for UTF-8 JSON: the ASCII structural bytes
+    never occur inside a multi-byte UTF-8 sequence. The payload itself
+    is never parsed recursively here. Malformed input (e.g. unbalanced
+    closers) simply never exceeds the bound on this scan and is left
+    for json.loads to reject as before.
+    """
+    depth = 0
+    in_string = False
+    escaped = False
+    for byte in raw:
+        if in_string:
+            if escaped:
+                escaped = False
+            elif byte == 0x5C:  # backslash
+                escaped = True
+            elif byte == 0x22:  # double quote
+                in_string = False
+            continue
+        if byte == 0x22:  # double quote
+            in_string = True
+        elif byte in (0x5B, 0x7B):  # [ {
+            depth += 1
+            if depth > MAX_JSON_NESTING_DEPTH:
+                return True
+        elif byte in (0x5D, 0x7D):  # ] }
+            if depth > 0:
+                depth -= 1
+    return False
+
 
 class CrowsnestHttpClient:
     """One-request-per-call HTTP client for the reads and worker writes above."""
@@ -249,11 +296,21 @@ class CrowsnestHttpClient:
         if 200 <= status < 300:
             if not raw:
                 raise TransportError("%s: empty body on HTTP %s" % (label, status))
+            if _json_nesting_exceeds_limit(raw):
+                # Deterministic bound, checked before json.loads: an
+                # over-depth 2xx body is unusable regardless of whether
+                # this interpreter's decoder would raise RecursionError.
+                raise TransportError(
+                    "%s: body on HTTP %s exceeds the maximum JSON "
+                    "nesting depth of %d"
+                    % (label, status, MAX_JSON_NESTING_DEPTH)
+                )
             try:
                 parsed = json.loads(raw.decode("utf-8"))
             except (UnicodeDecodeError, ValueError, RecursionError) as exc:
-                # RecursionError: deeply nested JSON (a few KB suffices)
-                # exhausts the decoder's recursion limit, not ValueError.
+                # RecursionError kept as belt-and-braces: deeply nested
+                # JSON within the explicit bound could still exhaust a
+                # decoder's recursion limit in some environment.
                 # Normalize narrowly here so an unusable 2xx stays a
                 # TransportError (=> UncertainWriteError at the write
                 # entrypoint), never a raw RecursionError.
@@ -276,14 +333,20 @@ class CrowsnestHttpClient:
         # non-text values instead of echoing them, then enforce ONE
         # common size limit on every branch (plain body and JSON).
         message = raw.decode("utf-8", "replace")
-        try:
-            parsed_error = json.loads(raw.decode("utf-8"))
-        except (UnicodeDecodeError, ValueError, RecursionError):
-            # Deeply nested diagnostic JSON cannot be parsed (decoder
-            # RecursionError); the already-known non-2xx head still
-            # stands as a ServiceRefusalError with its native status,
-            # falling back to the bounded plain-text message below.
+        if _json_nesting_exceeds_limit(raw):
+            # Over-depth diagnostic JSON is not parsed at all (and the
+            # decoder might not raise RecursionError for it in every
+            # environment); the already-known non-2xx head still stands
+            # as a ServiceRefusalError with its native status, falling
+            # back to the bounded plain-text message below.
             parsed_error = None
+        else:
+            try:
+                parsed_error = json.loads(raw.decode("utf-8"))
+            except (UnicodeDecodeError, ValueError, RecursionError):
+                # Belt-and-braces for a decoder RecursionError within
+                # the explicit bound; same bounded-text fallback.
+                parsed_error = None
         if isinstance(parsed_error, dict) and parsed_error.get("error"):
             error_value = parsed_error["error"]
             if isinstance(error_value, str):

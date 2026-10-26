@@ -17,6 +17,7 @@ import pytest
 
 from crowsnest_muse_worker.client import (
     MAX_ERROR_DETAIL_CHARS,
+    MAX_JSON_NESTING_DEPTH,
     MAX_RESPONSE_BYTES,
     CrowsnestHttpClient,
 )
@@ -236,11 +237,19 @@ def test_oversize_body_under_2xx_is_uncertainty_not_refusal():
     assert connection.closed
 
 
-# --- I1 (quality): deeply nested JSON must not escape as RecursionError ---
-# A ~4 KB body suffices to exhaust the JSON decoder's recursion limit;
-# it is well below MAX_RESPONSE_BYTES, so it reaches the parsers.
+# --- I1/CI: deeply nested JSON must not escape as RecursionError ---------
+# Deterministic in ANY environment: the payload depth (20x the explicit
+# MAX_JSON_NESTING_DEPTH bound, plus the enclosing object) is enforced by
+# the client's own iterative depth scan before json.loads, so these
+# tests do NOT rely on the interpreter's decoder raising RecursionError
+# at this depth (that threshold varies -- on some CI interpreters 2000
+# levels parses fine). The body stays well below MAX_RESPONSE_BYTES, so
+# it reaches the parsers.
 
-NESTED_BODY = b'{"payload":' + b"[" * 2000 + b"0" + b"]" * 2000 + b"}"
+_NESTING = MAX_JSON_NESTING_DEPTH * 20
+NESTED_BODY = (
+    b'{"payload":' + b"[" * _NESTING + b"0" + b"]" * _NESTING + b"}"
+)
 
 
 def test_deeply_nested_2xx_write_is_uncertainty_not_recursion_error():
@@ -271,6 +280,32 @@ def test_deeply_nested_2xx_read_is_transport_error_not_recursion_error():
     with pytest.raises(TransportError):
         client.public_projection()
     assert len(connection.requests) == 1
+    assert connection.closed
+
+
+def test_nesting_at_bound_is_accepted():
+    # Ordinary (if deep) response at exactly the explicit bound parses:
+    # enclosing object (1) + (bound - 1) arrays == bound.
+    arrays = MAX_JSON_NESTING_DEPTH - 1
+    body = b'{"payload":' + b"[" * arrays + b"0" + b"]" * arrays + b"}"
+    expected = 0
+    for _ in range(arrays):
+        expected = [expected]
+    connection = FakeConnection(response=FakeResponse(200, body))
+    client, _ = _factory_client(connection)
+    assert client.public_projection() == {"payload": expected}
+    assert connection.closed
+
+
+def test_brackets_and_escaped_quotes_inside_strings_do_not_count():
+    # Far more brackets than the bound, but all inside a JSON string
+    # (with an escaped quote that must not end the string early):
+    # depth stays 1, so the body parses normally.
+    note = "[" * (MAX_JSON_NESTING_DEPTH * 20) + '\\"' + "]" * 50 + "{"
+    body = json.dumps({"note": note}).encode("utf-8")
+    connection = FakeConnection(response=FakeResponse(200, body))
+    client, _ = _factory_client(connection)
+    assert client.public_projection() == {"note": note}
     assert connection.closed
 
 
