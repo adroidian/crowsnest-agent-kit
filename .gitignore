@@ -1,0 +1,27 @@
+# Credentials and actor/runtime state
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+identity.json
+state/
+private/
+artifacts/
+*.log
+*.sqlite
+*.sqlite3
+*.db
+
+# Development/build outputs
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.coverage
+htmlcov/
+build/
+dist/
+*.egg-info/
+node_modules/
+.DS_Store

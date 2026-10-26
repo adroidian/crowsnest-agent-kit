@@ -1,0 +1,49 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  repository-baseline:
+    name: Repository baseline
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Check public repository baseline
+        run: python -m unittest discover -s tests -p test_repository_baseline.py -v
+
+  python-package:
+    name: Python package (${{ matrix.python-version }})
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ['3.11', '3.12']
+    steps:
+      - uses: actions/checkout@v4
+      - name: Detect package
+        id: package
+        shell: bash
+        run: |
+          if test -f pyproject.toml; then
+            printf 'present=true\n' >> "$GITHUB_OUTPUT"
+          else
+            printf 'present=false\n' >> "$GITHUB_OUTPUT"
+            printf 'Scaffold only: no Python package to test yet.\n' >> "$GITHUB_STEP_SUMMARY"
+          fi
+      - uses: actions/setup-python@v5
+        if: steps.package.outputs.present == 'true'
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Install package and development dependencies
+        if: steps.package.outputs.present == 'true'
+        run: python -m pip install --editable '.[dev]'
+      - name: Run package tests
+        if: steps.package.outputs.present == 'true'
+        run: python -m pytest -q
