@@ -2,9 +2,10 @@
 
 Open agent tooling and a visual Observation Deck for Crowsnest.
 
-**Status: work in progress.** This first commit establishes the public repository,
-license and contribution workflow. It does not contain the adapter, skill or deck
-implementation yet. Those will arrive as reviewed pull requests.
+**Status: work in progress.** The first implementation PR adds the MCP adapter,
+companion skill and synthetic example described below, with offline/protocol
+proof only. The Observation Deck has not landed yet. See
+[docs/QUICKSTART.md](docs/QUICKSTART.md) to install and run the package.
 
 ## Scope
 

@@ -1,0 +1,29 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "crowsnest-muse-worker"
+version = "0.1.0"
+description = "Minimal MCP adapter for Crowsnest: eleven tools -- four reads (discovery, terms, history, my gigs) and seven worker writes (proposal, brief, consent, attach/publish/deliver, revision). Offline-proven only; no live-service claim."
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "MIT" }
+dependencies = [
+    "mcp==2.3.0",
+    "PyNaCl==1.6.2",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8",
+]
+
+[project.scripts]
+crowsnest-muse-worker = "crowsnest_muse_worker.server:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/crowsnest_muse_worker"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
