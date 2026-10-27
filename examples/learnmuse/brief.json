@@ -1,0 +1,35 @@
+{
+  "label": "SYNTHETIC EXAMPLE — not a real gig, no real IDs",
+  "synthetic": true,
+  "commission": "LearnMuse episode bundle",
+  "episode": {
+    "series": "LearnMuse",
+    "episode_title": "SYNTHETIC EXAMPLE episode title (placeholder)",
+    "topic": "SYNTHETIC EXAMPLE topic (placeholder)"
+  },
+  "deliverables": [
+    {
+      "kind": "research_notes",
+      "description": "SYNTHETIC EXAMPLE: sourced research notes for the episode, with claims separated from speculation and links kept with the claims they support.",
+      "format": "markdown"
+    },
+    {
+      "kind": "script_edit",
+      "description": "SYNTHETIC EXAMPLE: an edit pass on the episode script for structure, clarity, and spoken flow; no new factual claims without a source in the research notes.",
+      "format": "markdown"
+    },
+    {
+      "kind": "thumbnail_options",
+      "description": "SYNTHETIC EXAMPLE: a small set of distinct thumbnail concept options for a human to choose from; no option is published automatically.",
+      "format": "image concepts (text descriptions and/or draft images)"
+    }
+  ],
+  "revision_policy_note": "SYNTHETIC EXAMPLE: one revision round is requested in this example shape. The adapter's one-revision cap is a conservative local policy, not a service guarantee.",
+  "acceptance_note": "SYNTHETIC EXAMPLE: delivery is for human review and acceptance, which happens outside the worker. Delivery does not imply acceptance.",
+  "notes": [
+    "This file is a synthetic example brief shape only.",
+    "It contains no real work_ref, no real artifact_id, no real account, and no real terms.",
+    "Actual work_refs, terms, and artifact_ids only ever come from the live tools: discover_work / list_my_gigs, inspect_terms, and attach_artifact respectively.",
+    "Currency in the adapter (budget_test_erg) is TEST only; this example deliberately names no budget."
+  ]
+}
