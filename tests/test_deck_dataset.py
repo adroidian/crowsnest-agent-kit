@@ -47,3 +47,13 @@ def test_generator_is_deterministic():
     subprocess.run([sys.executable, str(ROOT / "tools" / "generate_sim_dataset.py")],
                    check=True, capture_output=True)
     assert (DECK / "sim_dataset.json").read_bytes() == before
+
+
+def test_replay_is_recorded_and_labelled():
+    r = json.loads((DECK / "replay_ep6.json").read_text())
+    assert "REPLAY" in r["label"]
+    assert [s["key"] for s in r["stages"]] == [
+        "posted", "proposed", "escrow", "delivered", "verified", "settled"]
+    assert r["price_erg"] == 300
+    for name in ("world.jpg", "project.jpg", "nest.jpg"):
+        assert (DECK / "assets" / name).stat().st_size > 100_000
