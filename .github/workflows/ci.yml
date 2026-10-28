@@ -41,6 +41,10 @@ jobs:
         if: steps.package.outputs.present == 'true'
         with:
           python-version: ${{ matrix.python-version }}
+      - uses: actions/setup-node@v4
+        if: steps.package.outputs.present == 'true'
+        with:
+          node-version: '22'
       - name: Install package and development dependencies
         if: steps.package.outputs.present == 'true'
         run: python -m pip install --editable '.[dev]'
