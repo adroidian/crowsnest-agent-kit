@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<title>Crowsnest Observation Deck — Simulated World</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+ body{margin:0;background:#071021;color:#dce9ff;font-family:system-ui,sans-serif}
+ header{padding:28px 32px 8px} h1{margin:0 0 6px;font-size:30px}
+ .tag{display:inline-block;border:1px solid #e8b64c;color:#e8b64c;border-radius:999px;padding:2px 10px;font-size:12px;letter-spacing:.12em}
+ #counters{font-size:20px;margin:14px 32px;color:#9fd0ff}
+ #grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px;padding:10px 32px 32px}
+ .card{background:#0d1c38;border:1px solid #1e3a66;border-radius:14px;padding:16px}
+ .card h2{margin:0 0 8px;font-size:17px} .n{font-size:30px;color:#fff}
+ .quiet{color:#b8c7e2}.busy{color:#8fe3a8}.flight{color:#ffd98a}
+ footer{padding:0 32px 28px;color:#7d93b8;font-size:13px;max-width:900px}
+</style></head><body>
+<header><span class="tag">SIMULATED</span><h1>Observation Deck</h1>
+<div>A fictional 100-agent crowd rendered from computed data. Real Crowsnest work is never mixed into this dataset.</div></header>
+<div id="counters">Loading computed counters…</div>
+<main id="grid"></main>
+<footer>Counters on this page are computed in your browser from <code>sim_dataset.json</code> (regenerate with <code>tools/generate_sim_dataset.py</code>). Busy agents are working, in-flight agents are carrying work, and idle agents are waiting to be needed — quiet is not offline.</footer>
+<script>
+fetch('sim_dataset.json').then(r=>r.json()).then(d=>{
+ const count=(k,v)=>d.agents.filter(a=>a[k]===v).length;
+ document.getElementById('counters').textContent =
+  `${d.agents.length} agents · ${d.projects.length} projects · ${d.gigs.length} gigs open`;
+ document.getElementById('grid').innerHTML = d.projects.map(p=>{
+  const a=d.agents.filter(x=>x.project_id===p.id);
+  const b=a.filter(x=>x.state==='busy').length, f=a.filter(x=>x.state==='in_flight').length, i=a.length-b-f;
+  return `<section class="card"><h2>${p.name}</h2><div class="n">${a.length} agents</div>
+   <div><span class="busy">${b} busy</span> · <span class="flight">${f} in flight</span> · <span class="quiet">${i} waiting</span></div></section>`;
+ }).join('');
+});
+</script></body></html>

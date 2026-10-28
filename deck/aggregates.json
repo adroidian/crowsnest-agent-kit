@@ -1,0 +1,23 @@
+{
+ "simulated": true,
+ "seed": 20261028,
+ "agents_total": 100,
+ "projects_total": 9,
+ "gigs_open": 64,
+ "agents_busy": 60,
+ "agents_in_flight": 19,
+ "agents_idle_waiting": 21,
+ "agents_per_project": {
+  "sim-proj-01": 12,
+  "sim-proj-02": 9,
+  "sim-proj-03": 14,
+  "sim-proj-04": 14,
+  "sim-proj-05": 13,
+  "sim-proj-06": 9,
+  "sim-proj-07": 7,
+  "sim-proj-08": 8,
+  "sim-proj-09": 14
+ },
+ "counter_line_world": "100 agents \u00b7 9 projects \u00b7 64 gigs open",
+ "note": "Fictional scale crowd. The single real nest is NOT in this dataset; real work is shown separately with recorded receipts."
+}
