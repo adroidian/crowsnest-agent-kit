@@ -3,71 +3,185 @@
 <title>Crowsnest Observation Deck</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
- body{margin:0;background:#071021;color:#dce9ff;font-family:system-ui,sans-serif}
- header{padding:22px 28px 4px;display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+ body{margin:0;background:#071021;color:#dce9ff;font-family:system-ui,sans-serif;color-scheme:dark}
+ header{padding:16px 28px 4px;display:flex;gap:14px;align-items:center;flex-wrap:wrap}
  h1{margin:0;font-size:26px}
  .tag{border:1px solid #e8b64c;color:#e8b64c;border-radius:999px;padding:2px 10px;font-size:12px;letter-spacing:.12em}
  .real{border-color:#8fe3a8;color:#8fe3a8}
- nav{padding:6px 28px} nav button{background:#0d1c38;color:#9fd0ff;border:1px solid #1e3a66;border-radius:999px;padding:6px 14px;margin-right:8px;cursor:pointer}
- nav button.on{background:#1e3a66;color:#fff}
- #counters{padding:4px 28px;color:#9fd0ff;font-size:17px}
- #stage{position:relative;margin:12px 28px;border-radius:16px;overflow:hidden;border:1px solid #1e3a66}
- #stage img{width:100%;display:block}
- .hot{position:absolute;transform:translate(-50%,-50%);background:rgba(7,16,33,.72);border:1px solid #e8b64c;color:#fff;border-radius:999px;padding:6px 12px;cursor:pointer;font-size:14px;white-space:nowrap}
- .hot:hover{background:rgba(232,182,76,.85);color:#071021}
- .nestdot{position:absolute;width:34px;height:34px;transform:translate(-50%,-50%);border-radius:50%;border:2px solid rgba(255,255,255,.65);background:rgba(232,182,76,.25);cursor:pointer}
+ nav{padding:6px 28px} button{font:inherit;background:#0d1c38;color:#b9ddff;border:1px solid #31527f;border-radius:999px;padding:7px 14px;cursor:pointer;min-height:36px}
+ nav button{margin:0 8px 4px 0} nav button.on{background:#1e3a66;color:#fff}
+ button:hover:not(:disabled){background:#28466e;color:#fff} button:focus-visible{outline:3px solid #e8b64c;outline-offset:3px} button:disabled{opacity:.5;cursor:default}
+ #counters{padding:4px 28px;color:#b9ddff;font-size:16px;font-variant-numeric:tabular-nums}
+ #stage{position:relative;margin:10px auto;border-radius:16px;overflow:hidden;border:1px solid #1e3a66;width:min(calc(100% - 56px),1280px,calc(60svh * 16 / 9));aspect-ratio:16/9;background:#0d1c38}
+ #plate{width:100%;height:100%;display:block;object-fit:contain}
+ .hot{position:absolute;transform:translate(-50%,-50%);background:rgba(7,16,33,.88);border:1px solid #e8b64c;color:#fff;border-radius:999px;padding:5px 10px;font-size:13px;white-space:nowrap;z-index:2}
+ .hot:hover{background:rgba(232,182,76,.9);color:#071021}
+ .nestdot{position:absolute;width:30px;height:30px;min-height:0;padding:0;transform:translate(-50%,-50%);border-radius:50%;border:2px solid rgba(255,255,255,.65);background:rgba(232,182,76,.25);z-index:2}
  .nestdot:hover{background:rgba(232,182,76,.7)}
- #card{margin:0 28px 10px;background:#0d1c38;border:1px solid #1e3a66;border-radius:14px;padding:16px;min-height:86px}
- #card h2{margin:0 0 6px;font-size:19px} #bar{height:6px;background:#1e3a66;border-radius:3px;margin:10px 28px 24px}
- #fill{height:100%;width:0;background:#e8b64c;border-radius:3px;transition:width .4s}
- footer{padding:0 28px 26px;color:#7d93b8;font-size:13px;max-width:940px}
+ #motion-layer{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+ .courier{position:absolute;left:0;top:0;width:4.8%;aspect-ratio:1;max-width:66px;min-width:22px;transform-origin:center;}
+ .courier img{width:100%;height:100%;object-fit:contain;object-position:center bottom;display:block}
+ .bundle-label{position:absolute;left:50%;top:78%;transform:translateX(-50%);background:#0d1c38;color:#fff2b8;border:1px solid #e8b64c;border-radius:4px;padding:2px 5px;font-size:11px;font-weight:600;white-space:nowrap}
+ #stage[data-view="world"] .courier{width:3.2%;max-width:44px;min-width:16px}
+ #stage[data-view="project"] .courier{width:3.8%;max-width:52px;min-width:18px}
+ .signal{position:absolute;left:0;top:0;width:10px;height:10px;border-radius:50%;background:#e8b64c;border:2px solid #fff2b8}
+ .route-anchor{position:absolute;transform:translate(-50%,18px);padding:2px 7px;background:rgba(7,16,33,.9);border:1px solid #53739b;border-radius:8px;font-size:11px;color:#e1edff}
+ .route-anchor.active{border-color:#e8b64c;color:#ffe4a0} #stage[data-key^="refusal"] .route-anchor.active{border-color:#f4a98a;color:#ffd7c8}
+ #scene-caption{position:absolute;left:12px;bottom:10px;max-width:calc(100% - 48px);padding:5px 9px;background:rgba(7,16,33,.92);font-size:12px;color:#dce9ff;border-radius:6px}
+ #controls{margin:8px 28px;display:flex;align-items:center;gap:8px;flex-wrap:wrap} #motion-status{font-size:12px;color:#b9cceb}
+ #card{margin:8px 28px 10px;background:#0d1c38;border:1px solid #1e3a66;border-radius:14px;padding:12px 16px;min-height:66px}
+ #card h2{margin:0 0 5px;font-size:19px} #detail{max-width:100ch;font-size:15px;line-height:1.45}
+ #bar{height:4px;background:#1e3a66;border-radius:3px;margin:10px 28px 12px} #fill{height:100%;width:0;background:#e8b64c;border-radius:3px}
+ footer{padding:0 28px 18px;color:#a5badb;font-size:12px;max-width:1100px;line-height:1.5}
+ ::selection{background:#e8b64c;color:#071021}
+ @media(min-width:1400px){#card,#controls,#bar{max-width:1248px;margin-left:auto;margin-right:auto}header,nav,#counters,footer{max-width:1280px;margin-left:auto;margin-right:auto}}
+ @media(max-width:600px){header{padding:14px 12px 6px}h1{font-size:23px}nav{padding:4px 12px}nav button{padding:7px 10px;font-size:13px;margin-right:4px}#counters{padding:4px 12px;font-size:14px}#stage{width:calc(100% - 24px);margin:10px auto;border-radius:10px}.hot{font-size:9px;padding:3px 5px;min-height:28px}.nestdot{width:23px;height:23px}.route-anchor{font-size:9px;padding:1px 4px;transform:translate(-50%,10px)}#scene-caption{left:6px;bottom:6px;font-size:10px;padding:3px 5px;max-width:calc(100% - 22px)}#controls{margin:8px 12px;gap:6px}#controls button{font-size:13px;padding:7px 11px;min-height:40px}#motion-status{width:100%}#card{margin:8px 12px;padding:12px}#card h2{font-size:17px}#detail{font-size:14px}#bar{margin:10px 12px}footer{padding:0 12px 18px}.signal{width:6px;height:6px}}
+ @media(prefers-reduced-motion:reduce){*{scroll-behavior:auto}}
 </style></head><body>
 <header><h1>Observation Deck</h1><span class="tag" id="mode">SIMULATED</span></header>
-<nav>
+<nav aria-label="Observation views">
  <button data-v="world" class="on">World</button><button data-v="project">Project</button><button data-v="nest">Roost · EP6 replay</button>
 </nav>
-<div id="counters">Loading…</div>
-<div id="stage"><img id="plate" src="assets/world.jpg" alt="plate"></div>
-<div id="card"><h2>World — the archipelago</h2><div id="detail">Nine districts, one hundred crows. Most are working; the quiet ones are waiting to be needed. Click a district to dive.</div></div>
-<div id="bar"><div id="fill"></div></div>
-<footer id="foot">World and Project views render a fictional, computed crowd (<code>sim_dataset.json</code>, regenerated deterministically by <code>tools/generate_sim_dataset.py</code>). The Roost view replays recorded work on a loop — sample/old data, shown as a replay, never as live activity. ERG is test credit with no cash value.</footer>
+<div id="counters">Simulated crowd · recorded EP6 available in the Roost</div>
+<div id="stage" data-view="world"><img id="plate" src="assets/world.jpg" alt="Painted nighttime archipelago of crow districts"><div id="motion-layer" aria-hidden="true"></div><div id="scene-caption">SIMULATED · illustrative routes, not live activity</div></div>
+<div id="controls" aria-label="Motion and replay controls">
+ <button id="pause" disabled>Pause motion</button><button id="previous" disabled>Previous</button><button id="next" disabled>Next</button><button id="restart" disabled>Restart replay</button><span id="motion-status">Motion requires JavaScript; source description remains below.</span>
+</div>
+<div id="card" aria-live="polite" aria-atomic="true"><h2>World — the archipelago</h2><div id="detail">Nine districts, one hundred simulated crows. Recorded EP6: request → two refused proposal attempts → successful proposal and consent → escrow 301 → bundle delivered → buyer checks → accepted, escrow 0. ERG is test credit, not money.</div></div>
+<div id="bar" aria-hidden="true"><div id="fill"></div></div>
+<footer id="foot">World and Project show a fictional, computed crowd from <code>sim_dataset.json</code>. Moving crows are a small sample; routes illustrate states, not actual trips. The Roost replays historical EP6 records, never live activity. ERG is test credit with no cash value. Playback timing is compressed; spatial routes are illustrative.</footer>
+<script src="motion.js"></script>
 <script>
-let DATA=null, REPLAY=null, view='world', timer=null, step=0, selectedProjectId=null;
-function selectedProject(){return DATA.projects.find(p=>p.id===selectedProjectId)}
+'use strict';
+let DATA=null, REPLAY=null, view='world', selectedProjectId=null;
+let clock=null, routes=[], sprites=[], anchors=[], frame=null, lastTime=null, simulatedTime=0;
+let stageWidth=0,stageHeight=0;
 const $=id=>document.getElementById(id);
-const POS=[[22,30],[46,22],[68,30],[84,44],[30,52],[55,48],[76,62],[42,72],[64,82]];
-const NESTS=[[30,28],[52,24],[73,30],[38,48],[60,52],[82,55],[47,72],[68,76]];
+const Core=DeckMotionCore, POS=Core.POS, NESTS=Core.NESTS;
+const media=window.matchMedia('(prefers-reduced-motion: reduce)');
+function selectedProject(){return DATA.projects.find(p=>p.id===selectedProjectId)}
+function measure(){stageWidth=$('stage').clientWidth;stageHeight=$('stage').clientHeight}
+function cancelClock(){if(frame!==null)cancelAnimationFrame(frame);frame=null;lastTime=null}
+function controls(){
+ const s=clock.snapshot(),replay=view==='nest';
+ $('pause').disabled=s.reducedMotion;
+ $('pause').textContent=s.reducedMotion?'Reduced motion':s.paused?'Resume motion':'Pause motion';
+ $('pause').setAttribute('aria-pressed',String(s.paused||s.reducedMotion));
+ $('previous').disabled=!replay||s.index===0;$('next').disabled=!replay||s.index===REPLAY.stages.length-1;
+ $('restart').disabled=!replay;
+ $('motion-status').textContent=s.reducedMotion?'Static poses · manual stages':s.hidden?'Hidden tab · suspended':s.paused?'Paused · sprites and replay held':replay?'Recorded replay · 50s, then holds':'Simulated motion · not live';
+}
+function rebuildRoutes(){
+ $('motion-layer').replaceChildren();sprites=[];anchors=[];
+ routes=view==='nest'?Core.replayRoutes(clock.snapshot().stageKey):Core.simulatedRoutes(DATA,view,selectedProjectId);
+ if(view==='nest')Object.entries(Core.ROOST).forEach(([key,p])=>{
+  const label=document.createElement('span');label.className='route-anchor';
+  const keyNow=clock.snapshot().stageKey,amount=keyNow==='settled'?'0':['escrow','delivered','verified'].includes(keyNow)?'301':'—';
+  label.textContent=key==='escrow'?'escrow · '+amount:key;
+  label.style.left=p[0]+'%';label.style.top=p[1]+'%';$('motion-layer').appendChild(label);anchors.push({key,label});
+ });
+ routes.forEach(route=>{
+  const el=document.createElement('span');el.className=route.role==='signal'?'signal':'courier';el.dataset.agentId=route.id;el.dataset.state=route.state||route.kind||'perched';
+  let image=null;if(route.role!=='signal'){image=document.createElement('img');image.alt='';image.draggable=false;el.appendChild(image)}
+  if(route.carry){const label=document.createElement('span');label.className='bundle-label';label.textContent='EP6 pack';el.appendChild(label)}
+  $('motion-layer').appendChild(el);sprites.push({route,el,image,pose:null});
+ });
+ measure();draw();
+}
+function draw(){
+ if(!clock)return;
+ const s=clock.snapshot();
+ sprites.forEach(item=>{
+  const {route,el,image}=item;
+  const progress=s.reducedMotion?.65:view==='nest'?s.progress:((simulatedTime/route.period+route.phase)%1);
+  const pose=Core.pose(route,progress);item.pose=pose;
+  el.style.transform=`translate(${pose.point[0]*stageWidth/100}px,${pose.point[1]*stageHeight/100}px) translate(-50%,-70%)`;
+  el.hidden=view==='nest'&&route.id==='roost-worker'&&routes.some(r=>r.role==='courier');
+  el.style.opacity=route.kind==='review'&&!s.reducedMotion?String(.45+.55*Math.sin(s.progress*Math.PI*4)**2):route.state==='busy'&&!s.reducedMotion?String(.78+.22*Math.sin(simulatedTime/900)**2):'1';
+  if(image){const src='assets/crows/crow_'+pose.frame+'.png';if(image.getAttribute('src')!==src)image.src=src;image.style.transform=`rotate(${pose.angle}deg) scaleX(${pose.mirror})`}
+ });
+ const key=s.stageKey,active=key==='escrow'?'escrow':key==='refusal_local'||key==='refusal_http'?'worker':'buyer';
+ anchors.forEach(a=>a.label.classList.toggle('active',a.key===active));
+}
+function showStage(){
+ const s=clock.snapshot(),stage=REPLAY.stages[s.index];
+ $('stage').dataset.key=stage.key;
+ $('card').querySelector('h2').textContent=`${s.index+1} / ${REPLAY.stages.length} · ${stage.title}`;
+ $('detail').textContent=stage.detail;
+ $('scene-caption').textContent='REPLAY · '+stage.marker;
+ $('fill').style.width=((s.index+1)/REPLAY.stages.length*100)+'%';
+ rebuildRoutes();controls();
+}
+function tick(time){
+ frame=null;
+ if(!clock.snapshot().running)return;
+ const delta=lastTime===null?0:Math.max(0,time-lastTime);lastTime=time;
+ if(view==='nest'){
+  const old=clock.snapshot().index;clock.advance(delta);
+  if(old!==clock.snapshot().index)showStage();
+ }else simulatedTime+=delta;
+ draw();
+ if(clock.snapshot().running)frame=requestAnimationFrame(tick);else controls();
+}
+function schedule(){cancelClock();controls();draw();if(clock.snapshot().running)frame=requestAnimationFrame(tick)}
+function setStage(index){clock.setStage(index);if(view==='nest')showStage();schedule();return getState()}
+function pause(){clock.pause();schedule();return getState()}
+function resume(){clock.resume();schedule();return getState()}
+function restart(){clock.restart();simulatedTime=0;if(view==='nest')showStage();schedule();return getState()}
+function getState(){return {ready:!!clock,view,selectedProjectId,...(clock?clock.snapshot():{}),simulatedTime,
+ activeFrame:frame!==null, routes:sprites.map(({route,pose,el})=>({id:route.id,projectId:route.projectId,state:route.state,kind:route.kind,moving:route.moving,visible:!el.hidden,from:route.from,to:route.to,pose}))}}
 function hotspots(){document.querySelectorAll('.hot,.nestdot').forEach(e=>e.remove())}
 function setView(v,projectId){
- if(!DATA || !REPLAY)return;
- if(projectId!==undefined){
-  if(!DATA.projects.some(p=>p.id===projectId))throw new Error('Unknown project');
-  selectedProjectId=projectId;
- }
- if(v==='nest' && !selectedProject().contains_real_nest)return setView('project');
- view=v;document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('on',b.dataset.v===v));
- hotspots();clearInterval(timer);$('fill').style.width='0';
- if(v==='world'){$('plate').src='assets/world.jpg';$('mode').textContent='SIMULATED';$('mode').className='tag';
+ if(!DATA||!REPLAY)return;
+ if(!['world','project','nest'].includes(v))throw new Error('Unknown view');
+ if(projectId!==undefined){if(!DATA.projects.some(p=>p.id===projectId))throw new Error('Unknown project');selectedProjectId=projectId}
+ if(v==='nest'&&!selectedProject().contains_real_nest)return setView('project');
+ cancelClock();view=v;simulatedTime=0;clock.restart();
+ document.querySelectorAll('nav button').forEach(b=>{b.classList.toggle('on',b.dataset.v===v);b.setAttribute('aria-current',b.dataset.v===v?'page':'false')});
+ hotspots();$('stage').dataset.view=v;$('stage').dataset.key='';$('fill').style.width='0';
+ $('plate').src='assets/'+v+'.jpg';$('plate').alt=v==='world'?'Painted nighttime archipelago of crow districts':v==='project'?'Painted forest district beside the lake':'Painted connected nests in the nighttime forest';
+ if(v==='world'){
+  $('mode').textContent='SIMULATED';$('mode').className='tag';
   $('counters').textContent=`${DATA.agents.length} agents · ${DATA.projects.length} projects · ${DATA.gigs.length} gigs open — computed from data`;
   $('card').querySelector('h2').textContent='World — the archipelago';
-  $('detail').textContent='Nine districts, one hundred crows. Most are working; the quiet ones are waiting to be needed. Click a district to dive.';
-  DATA.projects.forEach((p,i)=>{const a=DATA.agents.filter(x=>x.project_id===p.id);const b=document.createElement('button');b.className='hot';b.style.left=POS[i][0]+'%';b.style.top=POS[i][1]+'%';b.textContent=`${p.name.split('—')[0].trim()} · ${a.length}`;b.onclick=()=>setView('project',p.id);$('stage').appendChild(b)});}
- if(v==='project'){$('plate').src='assets/project.jpg';$('mode').textContent='SIMULATED';$('mode').className='tag';
+  $('detail').textContent='Nine districts, one hundred simulated crows. A small sample flies illustrative routes; busy and waiting crows perch. Choose a district to dive.';
+  DATA.projects.forEach((p,i)=>{const a=DATA.agents.filter(x=>x.project_id===p.id),b=document.createElement('button');b.className='hot';b.style.left=POS[i][0]+'%';b.style.top=POS[i][1]+'%';b.textContent=`${p.name.split('—')[0].trim()} · ${a.length}`;b.onclick=()=>setView('project',p.id);$('stage').appendChild(b)});
+ }
+ if(v==='project'){
+  $('mode').textContent='SIMULATED';$('mode').className='tag';
   const p=selectedProject(),a=DATA.agents.filter(x=>x.project_id===p.id);
   $('counters').textContent=`${p.name}: ${a.length} agents · ${a.filter(x=>x.state==='busy').length} busy · ${a.filter(x=>x.state==='in_flight').length} in flight · ${a.filter(x=>x.state==='idle_waiting').length} waiting`;
   $('card').querySelector('h2').textContent='Project — '+p.name;
-  $('detail').textContent=p.contains_real_nest?'Illustrative district layout. The highlighted EP6 nest opens recorded real work.':'Illustrative district layout. No recorded work is attached to this simulated project.';
-  NESTS.forEach((n,i)=>{const d=document.createElement('div');d.className='nestdot';d.style.left=n[0]+'%';d.style.top=n[1]+'%';if(p.contains_real_nest && i===3){d.style.borderColor='#8fe3a8';d.style.background='rgba(143,227,168,.45)';d.title='EP6 nest — recorded work';d.onclick=()=>setView('nest')} $('stage').appendChild(d)});}
- if(v==='nest'){$('plate').src='assets/nest.jpg';$('mode').textContent='REPLAY — RECORDED';$('mode').className='tag real';
-  $('counters').textContent=REPLAY.project+' · '+REPLAY.gig;
-  const show=()=>{const s=REPLAY.stages[step%REPLAY.stages.length];$('card').querySelector('h2').textContent=`${step%REPLAY.stages.length+1} / ${REPLAY.stages.length} · ${s.title}`;
-   $('detail').textContent=s.detail+' ('+s.marker+')';$('fill').style.width=((step%REPLAY.stages.length+1)/REPLAY.stages.length*100)+'%';step++};
-  show();timer=setInterval(show,3600);}
+  $('detail').textContent=p.contains_real_nest?'Simulated routes between illustrative nest dots. The highlighted EP6 nest opens recorded real work.':'Simulated routes between illustrative nest dots. No recorded work is attached to this simulated project.';
+  NESTS.forEach((n,i)=>{const playable=p.contains_real_nest&&i===3,d=document.createElement(playable?'button':'div');d.className='nestdot';d.style.left=n[0]+'%';d.style.top=n[1]+'%';if(playable){d.style.borderColor='#8fe3a8';d.style.background='rgba(143,227,168,.45)';d.title='EP6 nest — recorded work';d.setAttribute('aria-label','Open recorded EP6 replay');d.onclick=()=>setView('nest')}else d.setAttribute('aria-hidden','true');$('stage').appendChild(d)});
+ }
+ if(v==='nest'){
+  $('mode').textContent='REPLAY — RECORDED';$('mode').className='tag real';$('counters').textContent=REPLAY.project+' · '+REPLAY.gig;showStage();
+ }else{$('scene-caption').textContent='SIMULATED · illustrative routes, not live activity';rebuildRoutes()}
+ schedule();return getState();
 }
+window.DeckMotion={getState,setStage,pause,resume,restart,setView,
+ seek(progress){clock.setProgress(progress);draw();return getState()},
+ getTimeline(){return REPLAY?REPLAY.stages.map(s=>({key:s.key,duration_ms:s.duration_ms})):[]}};
+$('pause').onclick=()=>clock.snapshot().paused?resume():pause();
+$('previous').onclick=()=>setStage(Math.max(0,clock.snapshot().index-1));
+$('next').onclick=()=>setStage(Math.min(REPLAY.stages.length-1,clock.snapshot().index+1));
+$('restart').onclick=restart;
+window.addEventListener('resize',()=>{measure();draw()});
+document.addEventListener('visibilitychange',()=>{if(clock){clock.setHidden(document.hidden);schedule()}});
+media.addEventListener('change',e=>{if(clock){clock.setReduced(e.matches);schedule()}});
+window.addEventListener('pagehide',cancelClock);
+window.addEventListener('pageshow',()=>{if(clock){clock.setHidden(document.hidden);schedule()}});
 document.querySelectorAll('nav button').forEach(b=>b.onclick=()=>{
  if(!DATA)return;
  if(b.dataset.v==='nest'){const p=DATA.projects.find(x=>x.contains_real_nest);if(!p)return;return setView('nest',p.id)}
  setView(b.dataset.v);
 });
-Promise.all([fetch('sim_dataset.json').then(r=>r.json()),fetch('replay_ep6.json').then(r=>r.json())]).then(([d,r])=>{DATA=d;REPLAY=r;selectedProjectId=(d.projects.find(p=>p.contains_real_nest)||d.projects[0]).id;setView('world')});
+// Warm the five approved poses without adding hidden DOM sprites or another clock.
+['flight_1','flight_2','flight_3','carry','perched'].forEach(name=>{const img=new Image();img.src='assets/crows/crow_'+name+'.png'});
+Promise.all([fetch('sim_dataset.json').then(r=>{if(!r.ok)throw new Error('dataset');return r.json()}),fetch('replay_ep6.json').then(r=>{if(!r.ok)throw new Error('replay');return r.json()})]).then(([d,r])=>{
+ DATA=d;REPLAY=r;clock=new Core.Clock(r.stages);clock.setReduced(media.matches);clock.setHidden(document.hidden);
+ selectedProjectId=(d.projects.find(p=>p.contains_real_nest)||d.projects[0]).id;
+ setView(new URLSearchParams(window.location.search).get('view')==='nest'?'nest':'world');
+}).catch(()=>{$('motion-status').textContent='Motion unavailable · serve this folder over HTTP and reload. Source description remains visible.'});
 </script></body></html>
