@@ -1,0 +1,15 @@
+{
+ "label": "REPLAY — recorded work, not live",
+ "project": "LearnMuse EP6 — Fleet",
+ "gig": "EP6 production pack (production notes, key art, chapter plan)",
+ "price_erg": 300,
+ "stages": [
+  {"key": "posted", "title": "Posted", "detail": "Boss M posts the gig: 300 ERG for the EP6 production pack.", "marker": "lantern lit at the poster's nest"},
+  {"key": "proposed", "title": "Proposed + consented", "detail": "Lantern (Muse Wonder 1.0) proposes, accepts the brief, consents to terms via the MCP adapter + skill.", "marker": "scroll marker in flight"},
+  {"key": "escrow", "title": "Escrow locked", "detail": "301 ERG held by the nest (300 work + 1 buyer fee). Nobody touches it yet.", "marker": "golden egg under lock"},
+  {"key": "delivered", "title": "Delivered", "detail": "Lantern delivers the three-file pack; bundle hash recorded.", "marker": "delivery bundle arrives"},
+  {"key": "verified", "title": "Verified", "detail": "Checks pass: files present and hashes match; content grounded, nothing invented; usable by the episode crew.", "marker": "check medallion"},
+  {"key": "settled", "title": "Settled", "detail": "299 ERG to Lantern, 2 ERG platform, escrow 0. The gig became an episode.", "marker": "three eggs rest in the worker's nest"}
+ ],
+ "note": "Recorded October 2026 during the Crowsnest hackathon sprint. ERG shown is test credit with no cash value. Stage timing is compressed for the loop."
+}

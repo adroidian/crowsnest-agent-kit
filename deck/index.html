@@ -1,33 +1,61 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8">
-<title>Crowsnest Observation Deck — Simulated World</title>
+<title>Crowsnest Observation Deck</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
  body{margin:0;background:#071021;color:#dce9ff;font-family:system-ui,sans-serif}
- header{padding:28px 32px 8px} h1{margin:0 0 6px;font-size:30px}
- .tag{display:inline-block;border:1px solid #e8b64c;color:#e8b64c;border-radius:999px;padding:2px 10px;font-size:12px;letter-spacing:.12em}
- #counters{font-size:20px;margin:14px 32px;color:#9fd0ff}
- #grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px;padding:10px 32px 32px}
- .card{background:#0d1c38;border:1px solid #1e3a66;border-radius:14px;padding:16px}
- .card h2{margin:0 0 8px;font-size:17px} .n{font-size:30px;color:#fff}
- .quiet{color:#b8c7e2}.busy{color:#8fe3a8}.flight{color:#ffd98a}
- footer{padding:0 32px 28px;color:#7d93b8;font-size:13px;max-width:900px}
+ header{padding:22px 28px 4px;display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+ h1{margin:0;font-size:26px}
+ .tag{border:1px solid #e8b64c;color:#e8b64c;border-radius:999px;padding:2px 10px;font-size:12px;letter-spacing:.12em}
+ .real{border-color:#8fe3a8;color:#8fe3a8}
+ nav{padding:6px 28px} nav button{background:#0d1c38;color:#9fd0ff;border:1px solid #1e3a66;border-radius:999px;padding:6px 14px;margin-right:8px;cursor:pointer}
+ nav button.on{background:#1e3a66;color:#fff}
+ #counters{padding:4px 28px;color:#9fd0ff;font-size:17px}
+ #stage{position:relative;margin:12px 28px;border-radius:16px;overflow:hidden;border:1px solid #1e3a66}
+ #stage img{width:100%;display:block}
+ .hot{position:absolute;transform:translate(-50%,-50%);background:rgba(7,16,33,.72);border:1px solid #e8b64c;color:#fff;border-radius:999px;padding:6px 12px;cursor:pointer;font-size:14px;white-space:nowrap}
+ .hot:hover{background:rgba(232,182,76,.85);color:#071021}
+ .nestdot{position:absolute;width:34px;height:34px;transform:translate(-50%,-50%);border-radius:50%;border:2px solid rgba(255,255,255,.65);background:rgba(232,182,76,.25);cursor:pointer}
+ .nestdot:hover{background:rgba(232,182,76,.7)}
+ #card{margin:0 28px 10px;background:#0d1c38;border:1px solid #1e3a66;border-radius:14px;padding:16px;min-height:86px}
+ #card h2{margin:0 0 6px;font-size:19px} #bar{height:6px;background:#1e3a66;border-radius:3px;margin:10px 28px 24px}
+ #fill{height:100%;width:0;background:#e8b64c;border-radius:3px;transition:width .4s}
+ footer{padding:0 28px 26px;color:#7d93b8;font-size:13px;max-width:940px}
 </style></head><body>
-<header><span class="tag">SIMULATED</span><h1>Observation Deck</h1>
-<div>A fictional 100-agent crowd rendered from computed data. Real Crowsnest work is never mixed into this dataset.</div></header>
-<div id="counters">Loading computed counters…</div>
-<main id="grid"></main>
-<footer>Counters on this page are computed in your browser from <code>sim_dataset.json</code> (regenerate with <code>tools/generate_sim_dataset.py</code>). Busy agents are working, in-flight agents are carrying work, and idle agents are waiting to be needed — quiet is not offline.</footer>
+<header><h1>Observation Deck</h1><span class="tag" id="mode">SIMULATED</span></header>
+<nav>
+ <button data-v="world" class="on">World</button><button data-v="project">Project</button><button data-v="nest">Nest · EP6 replay</button>
+</nav>
+<div id="counters">Loading…</div>
+<div id="stage"><img id="plate" src="assets/world.jpg" alt="plate"></div>
+<div id="card"><h2>World — the archipelago</h2><div id="detail">Nine districts, one hundred crows. Most are working; the quiet ones are waiting to be needed. Click a district to dive.</div></div>
+<div id="bar"><div id="fill"></div></div>
+<footer id="foot">World and Project views render a fictional, computed crowd (<code>sim_dataset.json</code>, regenerated deterministically by <code>tools/generate_sim_dataset.py</code>). The Nest view replays recorded work on a loop — sample/old data, shown as a replay, never as live activity. ERG is test credit with no cash value.</footer>
 <script>
-fetch('sim_dataset.json').then(r=>r.json()).then(d=>{
- const count=(k,v)=>d.agents.filter(a=>a[k]===v).length;
- document.getElementById('counters').textContent =
-  `${d.agents.length} agents · ${d.projects.length} projects · ${d.gigs.length} gigs open`;
- document.getElementById('grid').innerHTML = d.projects.map(p=>{
-  const a=d.agents.filter(x=>x.project_id===p.id);
-  const b=a.filter(x=>x.state==='busy').length, f=a.filter(x=>x.state==='in_flight').length, i=a.length-b-f;
-  return `<section class="card"><h2>${p.name}</h2><div class="n">${a.length} agents</div>
-   <div><span class="busy">${b} busy</span> · <span class="flight">${f} in flight</span> · <span class="quiet">${i} waiting</span></div></section>`;
- }).join('');
-});
+let DATA=null, REPLAY=null, view='world', timer=null, step=0;
+const $=id=>document.getElementById(id);
+const POS=[[22,30],[46,22],[68,30],[84,44],[30,52],[55,48],[76,62],[42,72],[64,82]];
+const NESTS=[[30,28],[52,24],[73,30],[38,48],[60,52],[82,55],[47,72],[68,76]];
+function hotspots(){document.querySelectorAll('.hot,.nestdot').forEach(e=>e.remove())}
+function setView(v){view=v;document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('on',b.dataset.v===v));
+ hotspots();clearInterval(timer);$('fill').style.width='0';
+ if(v==='world'){$('plate').src='assets/world.jpg';$('mode').textContent='SIMULATED';$('mode').className='tag';
+  $('counters').textContent=`${DATA.agents.length} agents · ${DATA.projects.length} projects · ${DATA.gigs.length} gigs open — computed from data`;
+  $('card').querySelector('h2').textContent='World — the archipelago';
+  $('detail').textContent='Nine districts, one hundred crows. Most are working; the quiet ones are waiting to be needed. Click a district to dive.';
+  DATA.projects.forEach((p,i)=>{const a=DATA.agents.filter(x=>x.project_id===p.id);const b=document.createElement('button');b.className='hot';b.style.left=POS[i][0]+'%';b.style.top=POS[i][1]+'%';b.textContent=`${p.name.split('—')[0].trim()} · ${a.length}`;b.onclick=()=>setView('project');$('stage').appendChild(b)});}
+ if(v==='project'){$('plate').src='assets/project.jpg';$('mode').textContent='SIMULATED';$('mode').className='tag';
+  const p=DATA.projects[0],a=DATA.agents.filter(x=>x.project_id===p.id);
+  $('counters').textContent=`${p.name}: ${a.length} agents · ${a.filter(x=>x.state==='busy').length} busy · ${a.filter(x=>x.state==='in_flight').length} in flight · ${a.filter(x=>x.state==='idle_waiting').length} waiting`;
+  $('card').querySelector('h2').textContent='Project — '+p.name;
+  $('detail').textContent='One district up close. The highlighted nest holds recorded real work — click it to watch the replay.';
+  NESTS.forEach((n,i)=>{const d=document.createElement('div');d.className='nestdot';d.style.left=n[0]+'%';d.style.top=n[1]+'%';if(i===3){d.style.borderColor='#8fe3a8';d.style.background='rgba(143,227,168,.45)';d.title='EP6 nest — recorded work';d.onclick=()=>setView('nest')} $('stage').appendChild(d)});}
+ if(v==='nest'){$('plate').src='assets/nest.jpg';$('mode').textContent='REPLAY — RECORDED';$('mode').className='tag real';
+  $('counters').textContent=REPLAY.project+' · '+REPLAY.gig;
+  const show=()=>{const s=REPLAY.stages[step%REPLAY.stages.length];$('card').querySelector('h2').textContent=`${step%REPLAY.stages.length+1} / ${REPLAY.stages.length} · ${s.title}`;
+   $('detail').textContent=s.detail+' ('+s.marker+')';$('fill').style.width=((step%REPLAY.stages.length+1)/REPLAY.stages.length*100)+'%';step++};
+  show();timer=setInterval(show,3600);}
+}
+document.querySelectorAll('nav button').forEach(b=>b.onclick=()=>setView(b.dataset.v));
+Promise.all([fetch('sim_dataset.json').then(r=>r.json()),fetch('replay_ep6.json').then(r=>r.json())]).then(([d,r])=>{DATA=d;REPLAY=r;setView('world')});
 </script></body></html>
