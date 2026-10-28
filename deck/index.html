@@ -24,13 +24,13 @@
 </style></head><body>
 <header><h1>Observation Deck</h1><span class="tag" id="mode">SIMULATED</span></header>
 <nav>
- <button data-v="world" class="on">World</button><button data-v="project">Project</button><button data-v="nest">Nest · EP6 replay</button>
+ <button data-v="world" class="on">World</button><button data-v="project">Project</button><button data-v="nest">Roost · EP6 replay</button>
 </nav>
 <div id="counters">Loading…</div>
 <div id="stage"><img id="plate" src="assets/world.jpg" alt="plate"></div>
 <div id="card"><h2>World — the archipelago</h2><div id="detail">Nine districts, one hundred crows. Most are working; the quiet ones are waiting to be needed. Click a district to dive.</div></div>
 <div id="bar"><div id="fill"></div></div>
-<footer id="foot">World and Project views render a fictional, computed crowd (<code>sim_dataset.json</code>, regenerated deterministically by <code>tools/generate_sim_dataset.py</code>). The Nest view replays recorded work on a loop — sample/old data, shown as a replay, never as live activity. ERG is test credit with no cash value.</footer>
+<footer id="foot">World and Project views render a fictional, computed crowd (<code>sim_dataset.json</code>, regenerated deterministically by <code>tools/generate_sim_dataset.py</code>). The Roost view replays recorded work on a loop — sample/old data, shown as a replay, never as live activity. ERG is test credit with no cash value.</footer>
 <script>
 let DATA=null, REPLAY=null, view='world', timer=null, step=0;
 const $=id=>document.getElementById(id);
@@ -48,7 +48,7 @@ function setView(v){view=v;document.querySelectorAll('nav button').forEach(b=>b.
   const p=DATA.projects[0],a=DATA.agents.filter(x=>x.project_id===p.id);
   $('counters').textContent=`${p.name}: ${a.length} agents · ${a.filter(x=>x.state==='busy').length} busy · ${a.filter(x=>x.state==='in_flight').length} in flight · ${a.filter(x=>x.state==='idle_waiting').length} waiting`;
   $('card').querySelector('h2').textContent='Project — '+p.name;
-  $('detail').textContent='One district up close. The highlighted nest holds recorded real work — click it to watch the replay.';
+  $('detail').textContent='One district up close. This roost holds recorded real work — click the highlighted nest to watch its replay.';
   NESTS.forEach((n,i)=>{const d=document.createElement('div');d.className='nestdot';d.style.left=n[0]+'%';d.style.top=n[1]+'%';if(i===3){d.style.borderColor='#8fe3a8';d.style.background='rgba(143,227,168,.45)';d.title='EP6 nest — recorded work';d.onclick=()=>setView('nest')} $('stage').appendChild(d)});}
  if(v==='nest'){$('plate').src='assets/nest.jpg';$('mode').textContent='REPLAY — RECORDED';$('mode').className='tag real';
   $('counters').textContent=REPLAY.project+' · '+REPLAY.gig;

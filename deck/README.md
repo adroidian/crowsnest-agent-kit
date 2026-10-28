@@ -2,7 +2,8 @@
 
 A static, dependency-free Observation Deck with three levels:
 World (archipelago, computed simulated crowd) -> Project (one district)
--> Nest (recorded EP6 work replaying on a loop, labelled REPLAY). Open `index.html` via any static file server, e.g.:
+-> Roost (the project's nest cluster; recorded EP6 work replaying
+on a loop at one nest, labelled REPLAY). Open `index.html` via any static file server, e.g.:
 
 ```sh
 python3 -m http.server --directory deck 8000
