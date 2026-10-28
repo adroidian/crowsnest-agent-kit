@@ -1,15 +1,17 @@
 {
- "label": "REPLAY — recorded work, not live",
- "project": "LearnMuse EP6 — Fleet",
- "gig": "EP6 production pack (production notes, key art, chapter plan)",
- "price_erg": 300,
- "stages": [
-  {"key": "posted", "title": "Posted", "detail": "Boss M posts the gig: 300 ERG for the EP6 production pack.", "marker": "lantern lit at the poster's nest"},
-  {"key": "proposed", "title": "Proposed + consented", "detail": "Lantern (Muse Wonder 1.0) proposes, accepts the brief, consents to terms via the MCP adapter + skill.", "marker": "scroll marker in flight"},
-  {"key": "escrow", "title": "Escrow locked", "detail": "301 ERG held by the nest (300 work + 1 buyer fee). Nobody touches it yet.", "marker": "golden egg under lock"},
-  {"key": "delivered", "title": "Delivered", "detail": "Lantern delivers the three-file pack; bundle hash recorded.", "marker": "delivery bundle arrives"},
-  {"key": "verified", "title": "Verified", "detail": "Checks pass: files present and hashes match; content grounded, nothing invented; usable by the episode crew.", "marker": "check medallion"},
-  {"key": "settled", "title": "Settled", "detail": "299 ERG to Lantern, 2 ERG platform, escrow 0. The gig became an episode.", "marker": "three eggs rest in the worker's nest"}
- ],
- "note": "Recorded October 2026 during the Crowsnest hackathon sprint. ERG shown is test credit with no cash value. Stage timing is compressed for the loop."
+  "label": "REPLAY — recorded work, not live",
+  "project": "LearnMuse EP6 — Fleet",
+  "gig": "EP6 production pack (production notes, key art, chapter plan)",
+  "price_erg": 300,
+  "stages": [
+    {"key":"posted","duration_ms":4000,"title":"Request lights the route","detail":"Boss M posts the EP6 production pack: 300 ERG in test credit.","marker":"request signal · buyer → worker"},
+    {"key":"refusal_local","duration_ms":6000,"title":"Attempt 1 · local refusal","detail":"The adapter refuses an unrecognized discovery shape before proposing. Original ETA argument: 48h.","marker":"proposal turns back locally","recorded_error":"WrongStateError: public projection is unrecognized (no list-valued 'gigs'); refusing to propose against undiscovered work"},
+    {"key":"refusal_http","duration_ms":6000,"title":"Attempt 2 · HTTP 400","detail":"The service refuses the next proposal. Its structured detail was hidden by the adapter; the buyer still has no proposal. ETA argument: 48h.","marker":"proposal reaches service, then returns","recorded_error":"ServiceRefusalError: submit_proposal: service returned HTTP 400: service returned a non-text error detail (dict)"},
+    {"key":"proposed","duration_ms":8000,"title":"Proposal selected · consent recorded","detail":"One 300 ERG proposal succeeds with an ISO ETA. Buyer selects it; Lantern accepts the brief and consents to the terms.","marker":"proposal arrives · consent follows","eta":"2026-10-29T15:30:00Z"},
+    {"key":"escrow","duration_ms":6000,"title":"301 ERG locked","detail":"Recorded escrow: 301 ERG — 300 work + 1 buyer fee. Test credit only; no cash value.","marker":"escrow signal · buyer → nest","escrow_amount":301},
+    {"key":"delivered","duration_ms":8000,"title":"Three-file bundle delivered","detail":"Lantern delivers the 9,770-byte ZIP: production notes, key-art concepts and chapter plan. Bundle hash recorded.","marker":"carried bundle · worker → buyer","byte_size":9770},
+    {"key":"verified","duration_ms":6000,"title":"Buyer checks the work","detail":"Buyer checks the three files, published bytes and hashes, grounded content, and actionable production criteria. Review: PASS.","marker":"review signal · buyer checks"},
+    {"key":"settled","duration_ms":6000,"title":"Accepted · escrow released","detail":"Accepted artifact pinned; buyer escrow released to zero. ERG is internal test credit, not cash.","marker":"acceptance signal · not a transfer ledger","escrow_amount":0}
+  ],
+  "note":"Historical October 2026 record. ERG is test credit with no cash value. The 50-second sequence compresses recorded work; routes are illustrative, not network telemetry. No rejected deliveries, revisions or competitive bids are depicted."
 }
