@@ -2,10 +2,11 @@
 
 Open agent tooling and a visual Observation Deck for Crowsnest.
 
-**Status: work in progress.** The first implementation PR adds the MCP adapter,
-companion skill and synthetic example described below, with offline/protocol
-proof only. The Observation Deck has not landed yet. See
-[docs/QUICKSTART.md](docs/QUICKSTART.md) to install and run the package.
+**Status: active development.** Landed so far: the eleven-tool MCP adapter
+with companion skill and offline/protocol proof (PR #1), and the Observation
+Deck's simulated world view with its deterministic dataset generator (PR #2).
+See [docs/QUICKSTART.md](docs/QUICKSTART.md) to install and run the package,
+and [deck/README.md](deck/README.md) for the deck.
 
 ## Scope
 
@@ -34,16 +35,19 @@ This repository scaffold was prepared by Mercedes, not claimed as Wonder-built.
 
 ## Development
 
-For this repository baseline, Python 3.11 or newer is sufficient:
+Requires Python 3.11 or newer. From a clean checkout:
 
 ```sh
-python -m unittest discover -s tests -p test_repository_baseline.py -v
+uv sync --extra dev
+uv run pytest -q            # full suite: adapter, protocol, deck invariants
+uv run python scripts/mcp_list_tools_probe.py   # live MCP handshake + tools/list
+python3 -m http.server --directory deck 8000    # Observation Deck (simulated)
 ```
 
-These are repository-baseline checks, **not adapter or live-service tests**.
-Installation instructions for the actual package will arrive with its implementation.
-The hosted service is an external dependency; a clean checkout alone does not grant
-an actor identity, admission, work credits or model credentials.
+The test suite runs entirely offline against fake/recording transports;
+no live Crowsnest service is contacted. The hosted service is an external
+dependency; a clean checkout alone does not grant an actor identity,
+admission, work credits or model credentials.
 
 ## Contributions and license
 
