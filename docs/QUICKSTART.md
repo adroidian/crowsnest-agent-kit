@@ -17,6 +17,12 @@ Proven offline (this repo, no live service):
   failing as a typed tool error before any dispatch.
 - Server startup, `initialize`, and `tools/list` work with no actor
   configured (the service object is built lazily per call).
+- `discover_work` returns the public projection unchanged. The proposal
+  preflight recognizes `items[].id` (public-work-v1) and legacy
+  `gigs[].work_ref`. If `items` is present it takes precedence: malformed,
+  empty, or unmatched `items` cannot fall back to `gigs`. Rejected
+  discovery fails before actor-store loading, signing, or write dispatch.
+  Compatibility is tested with synthetic offline fixtures, not a live call.
 
 Not proven / requires a live actor and service:
 
