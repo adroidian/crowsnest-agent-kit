@@ -1,0 +1,1403 @@
+{
+ "simulated": true,
+ "seed": 20261028,
+ "projects": [
+  {
+   "id": "sim-proj-01",
+   "name": "LearnMuse EP6 \u2014 Fleet",
+   "contains_real_nest": true
+  },
+  {
+   "id": "sim-proj-02",
+   "name": "Thumbnail Workshop",
+   "contains_real_nest": false
+  },
+  {
+   "id": "sim-proj-03",
+   "name": "Show-Notes Bureau",
+   "contains_real_nest": false
+  },
+  {
+   "id": "sim-proj-04",
+   "name": "Transcript Guild",
+   "contains_real_nest": false
+  },
+  {
+   "id": "sim-proj-05",
+   "name": "Clip Foundry",
+   "contains_real_nest": false
+  },
+  {
+   "id": "sim-proj-06",
+   "name": "Research Perch",
+   "contains_real_nest": false
+  },
+  {
+   "id": "sim-proj-07",
+   "name": "Sound & Score Loft",
+   "contains_real_nest": false
+  },
+  {
+   "id": "sim-proj-08",
+   "name": "Code Roost",
+   "contains_real_nest": false
+  },
+  {
+   "id": "sim-proj-09",
+   "name": "Quiet Archive",
+   "contains_real_nest": false
+  }
+ ],
+ "agents": [
+  {
+   "id": "sim-agent-001",
+   "handle": "crow-001",
+   "simulated": true,
+   "model": "Muse Spark",
+   "project_id": "sim-proj-09",
+   "state": "idle_waiting",
+   "open_gigs_held": 0
+  },
+  {
+   "id": "sim-agent-002",
+   "handle": "crow-002",
+   "simulated": true,
+   "model": "Muse Wonder 1.0",
+   "project_id": "sim-proj-04",
+   "state": "busy",
+   "open_gigs_held": 2
+  },
+  {
+   "id": "sim-agent-003",
+   "handle": "crow-003",
+   "simulated": true,
+   "model": "Muse Spark",
+   "project_id": "sim-proj-03",
+   "state": "busy",
+   "open_gigs_held": 1
+  },
+  {
+   "id": "sim-agent-004",
+   "handle": "crow-004",
+   "simulated": true,
+   "model": "Muse Wonder 1.0",
+   "project_id": "sim-proj-04",
+   "state": "idle_waiting",
+   "open_gigs_held": 0
+  },
+  {
+   "id": "sim-agent-005",
+   "handle": "crow-005",
+   "simulated": true,
+   "model": "Muse Spark",
+   "project_id": "sim-proj-01",
+   "state": "idle_waiting",
+   "open_gigs_held": 0
+  },
+  {
+   "id": "sim-agent-006",
+   "handle": "crow-006",
+   "simulated": true,
+   "model": "Muse Wonder 1.0",
+   "project_id": "sim-proj-04",
+   "state": "in_flight",
+   "open_gigs_held": 0
+  },
+  {
+   "id": "sim-agent-007",
+   "handle": "crow-007",
+   "simulated": true,
+   "model": "Muse Wonder 1.0",
+   "project_id": "sim-proj-06",
+   "state": "busy",
+   "open_gigs_held": 1
+  },
+  {
+   "id": "sim-agent-008",
+   "handle": "crow-008",
+   "simulated": true,
+   "model": "Muse Wonder 1.0",
+   "project_id": "sim-proj-02",
+   "state": "idle_waiting",
+   "open_gigs_held": 0
+  },
+  {
+   "id": "sim-agent-009",
+   "handle": "crow-009",
+   "simulated": true,
+   "model": "Muse Wonder 1.0",
+   "project_id": "sim-proj-01",
+   "state": "busy",
+   "open_gigs_held": 1
+  },
+  {
+   "id": "sim-agent-010",
+   "handle": "crow-010",
+   "simulated": true,
+   "model": "Muse Spark",
+   "project_id": "sim-proj-01",
+   "state": "idle_waiting",
+   "open_gigs_held": 0
+  },
+  {
+   "id": "sim-agent-011",
+   "handle": "crow-011",
+   "simulated": true,
+   "model": "Muse Wonder 1.0",
+   "project_id": "sim-proj-03",
+   "state": "busy",
+   "open_gigs_held": 2
+  },
+  {
+   "id": "sim-agent-012",
+   "handle": "crow-012",
+   "simulated": true,
+   "model": "Muse Wonder 1.0",
+   "project_id": "sim-proj-07",
+   "state": "busy",
+   "open_gigs_held": 1
+  },
+  {
+   "id": "sim-agent-013",
+   "handle": "crow-013",
+   "simulated": true,
+   "model": "Muse Spark",
+   "project_id": "sim-proj-03",
+   "state": "busy",
+   "open_gigs_held": 1
+  },
+  {
+   "id": "sim-agent-014",
+   "handle": "crow-014",
+   "simulated": true,
+   "model": "Muse Spark",
+   "project_id": "sim-proj-07",
+   "state": "busy",
+   "open_gigs_held": 0
+  },
+  {
+   "id": "sim-agent-015",
+   "handle": "crow-015",
+   "simulated": true,
+   "model": "Muse Spark",
+   "project_id": "sim-proj-04",
+   "state": "busy",
+   "open_gigs_held": 1
+  },
+  {
+   "id": "sim-agent-016",
+   "handle": "crow-016",
+   "simulated": true,
+   "model": "Muse Spark",
+   "project_id": "sim-proj-08",
+   "state": "in_flight",
+   "open_gigs_held": 0
+  },
+  {
+   "id": "sim-agent-017",
+   "handle": "crow-017",
+   "simulated": true,
+   "model": "Muse Haiku-class",
+   "project_id": "sim-proj-02",
+   "state": "in_flight",
+   "open_gigs_held": 0
+  },
+  {
+   "id": "sim-agent-018",
+   "handle": "crow-018",
+   "simulated": true,
+   "model": "Muse Wonder 1.0",
+   "project_id": "sim-proj-09",
+   "state": "busy",
+   "open_gigs_held": 0
+  },
+  {
+   "id": "sim-agent-019",
+   "handle": "crow-019",
+   "simulated": true,
+   "model": "Muse Wonder 1.0",
+   "project_id": "sim-proj-01",
+   "state": "busy",
+   "open_gigs_held": 2
+  },
+  {
+   "id": "sim-agent-020",
+   "handle": "crow-020",
+   "simulated": true,
+   "model": "Muse Spark",
+   "project_id": "sim-proj-06",
+   "state": "busy",
+   "open_gigs_held": 0
+  },
+  {
+   "id": "sim-agent-021",
+   "handle": "crow-021",
+   "simulated": true,
+   "model": "Muse Wonder 1.0",
+   "project_id": "sim-proj-02",
+   "state": "busy",
+   "open_gigs_held": 2
+  },
+  {
+   "id": "sim-agent-022",
+   "handle": "crow-022",
+   "simulated": true,
+   "model": "Muse Haiku-class",
+   "project_id": "sim-proj-07",
+   "state": "busy",
+   "open_gigs_held": 2
+  },
+  {
+   "id": "sim-agent-023",
+   "handle": "crow-023",
+   "simulated": true,
+   "model": "Muse Spark",
+   "project_id": "sim-proj-07",
+   "state": "idle_waiting",
+   "open_gigs_held": 0
+  },
+  {
+   "id": "sim-agent-024",
+   "handle": "crow-024",
+   "simulated": true,
+   "model": "Muse Haiku-class",
+   "project_id": "sim-proj-04",
+   "state": "busy",
+   "open_gigs_held": 0
+  },
+  {
+   "id": "sim-agent-025",
+   "handle": "crow-025",
+   "simulated": true,
+   "model": "Muse Wonder 1.0",
+   "project_id": "sim-proj-01",
+   "state": "busy",
+   "open_gigs_held": 1
+  },
+  {
+   "id": "sim-agent-026",
+   "handle": "crow-026",
+   "simulated": true,
+   "model": "Muse Spark",
+   "project_id": "sim-proj-08",
+   "state": "busy",
+   "open_gigs_held": 2
+  },
+  {
+   "id": "sim-agent-027",
+   "handle": "crow-027",
+   "simulated": true,
+   "model": "Muse Spark",
+   "project_id": "sim-proj-01",
+   "state": "busy",
+   "open_gigs_held": 2
+  },
+  {
+   "id": "sim-agent-028",
+   "handle": "crow-028",
+   "simulated": true,
+   "model": "Muse Haiku-class",
+   "project_id": "sim-proj-02",
+   "state": "busy",
+   "open_gigs_held": 2
+  },
+  {
+   "id": "sim-agent-029",
+   "handle": "crow-029",
+   "simulated": true,
+   "model": "Muse Spark",
+   "project_id": "sim-proj-07",
+   "state": "busy",
+   "open_gigs_held": 2
+  },
+  {
+   "id": "sim-agent-030",
+   "handle": "crow-030",
+   "simulated": true,
+   "model": "Muse Spark",
+   "project_id": "sim-proj-05",
+   "state": "in_flight",
+   "open_gigs_held": 0
+  },
+  {
+   "id": "sim-agent-031",
+   "handle": "crow-031",
+   "simulated": true,
+   "model": "Muse Spark",
+   "project_id": "sim-proj-08",
+   "state": "idle_waiting",
+   "open_gigs_held": 0
+  },
+  {
+   "id": "sim-agent-032",
+   "handle": "crow-032",
+   "simulated": true,
+   "model": "Muse Wonder 1.0",
+   "project_id": "sim-proj-03",
+   "state": "idle_waiting",
+   "open_gigs_held": 0
+  },
+  {
+   "id": "sim-agent-033",
+   "handle": "crow-033",
+   "simulated": true,
+   "model": "Muse Spark",
+   "project_id": "sim-proj-04",
+   "state": "busy",
+   "open_gigs_held": 0
+  },
+  {
+   "id": "sim-agent-034",
+   "handle": "crow-034",
+   "simulated": true,
+   "model": "Muse Haiku-class",
+   "project_id": "sim-proj-06",
+   "state": "busy",
+   "open_gigs_held": 2
+  },
+  {
+   "id": "sim-agent-035",
+   "handle": "crow-035",
+   "simulated": true,
+   "model": "Muse Spark",
+   "project_id": "sim-proj-01",
+   "state": "in_flight",
+   "open_gigs_held": 0
+  },
+  {
+   "id": "sim-agent-036",
+   "handle": "crow-036",
+   "simulated": true,
+   "model": "Muse Wonder 1.0",
+   "project_id": "sim-proj-05",
+   "state": "busy",
+   "open_gigs_held": 0
+  },
+  {
+   "id": "sim-agent-037",
+   "handle": "crow-037",
+   "simulated": true,
+   "model": "Muse Wonder 1.0",
+   "project_id": "sim-proj-05",
+   "state": "in_flight",
+   "open_gigs_held": 0
+  },
+  {
+   "id": "sim-agent-038",
+   "handle": "crow-038",
+   "simulated": true,
+   "model": "Muse Haiku-class",
+   "project_id": "sim-proj-01",
+   "state": "idle_waiting",
+   "open_gigs_held": 0
+  },
+  {
+   "id": "sim-agent-039",
+   "handle": "crow-039",
+   "simulated": true,
+   "model": "Muse Spark",
+   "project_id": "sim-proj-01",
+   "state": "busy",
+   "open_gigs_held": 1
+  },
+  {
+   "id": "sim-agent-040",
+   "handle": "crow-040",
+   "simulated": true,
+   "model": "Muse Wonder 1.0",
+   "project_id": "sim-proj-03",
+   "state": "idle_waiting",
+   "open_gigs_held": 0
+  },
+  {
+   "id": "sim-agent-041",
+   "handle": "crow-041",
+   "simulated": true,
+   "model": "Muse Spark",
+   "project_id": "sim-proj-08",
+   "state": "idle_waiting",
+   "open_gigs_held": 0
+  },
+  {
+   "id": "sim-agent-042",
+   "handle": "crow-042",
+   "simulated": true,
+   "model": "Muse Wonder 1.0",
+   "project_id": "sim-proj-09",
+   "state": "busy",
+   "open_gigs_held": 0
+  },
+  {
+   "id": "sim-agent-043",
+   "handle": "crow-043",
+   "simulated": true,
+   "model": "Muse Spark",
+   "project_id": "sim-proj-03",
+   "state": "idle_waiting",
+   "open_gigs_held": 0
+  },
+  {
+   "id": "sim-agent-044",
+   "handle": "crow-044",
+   "simulated": true,
+   "model": "Muse Wonder 1.0",
+   "project_id": "sim-proj-09",
+   "state": "in_flight",
+   "open_gigs_held": 0
+  },
+  {
+   "id": "sim-agent-045",
+   "handle": "crow-045",
+   "simulated": true,
+   "model": "Muse Wonder 1.0",
+   "project_id": "sim-proj-04",
+   "state": "busy",
+   "open_gigs_held": 0
+  },
+  {
+   "id": "sim-agent-046",
+   "handle": "crow-046",
+   "simulated": true,
+   "model": "Muse Wonder 1.0",
+   "project_id": "sim-proj-06",
+   "state": "in_flight",
+   "open_gigs_held": 0
+  },
+  {
+   "id": "sim-agent-047",
+   "handle": "crow-047",
+   "simulated": true,
+   "model": "Muse Wonder 1.0",
+   "project_id": "sim-proj-03",
+   "state": "in_flight",
+   "open_gigs_held": 0
+  },
+  {
+   "id": "sim-agent-048",
+   "handle": "crow-048",
+   "simulated": true,
+   "model": "Muse Spark",
+   "project_id": "sim-proj-08",
+   "state": "busy",
+   "open_gigs_held": 1
+  },
+  {
+   "id": "sim-agent-049",
+   "handle": "crow-049",
+   "simulated": true,
+   "model": "Muse Wonder 1.0",
+   "project_id": "sim-proj-09",
+   "state": "busy",
+   "open_gigs_held": 2
+  },
+  {
+   "id": "sim-agent-050",
+   "handle": "crow-050",
+   "simulated": true,
+   "model": "Muse Wonder 1.0",
+   "project_id": "sim-proj-01",
+   "state": "busy",
+   "open_gigs_held": 1
+  },
+  {
+   "id": "sim-agent-051",
+   "handle": "crow-051",
+   "simulated": true,
+   "model": "Muse Wonder 1.0",
+   "project_id": "sim-proj-08",
+   "state": "busy",
+   "open_gigs_held": 1
+  },
+  {
+   "id": "sim-agent-052",
+   "handle": "crow-052",
+   "simulated": true,
+   "model": "Muse Spark",
+   "project_id": "sim-proj-09",
+   "state": "busy",
+   "open_gigs_held": 1
+  },
+  {
+   "id": "sim-agent-053",
+   "handle": "crow-053",
+   "simulated": true,
+   "model": "Muse Spark",
+   "project_id": "sim-proj-02",
+   "state": "in_flight",
+   "open_gigs_held": 0
+  },
+  {
+   "id": "sim-agent-054",
+   "handle": "crow-054",
+   "simulated": true,
+   "model": "Muse Wonder 1.0",
+   "project_id": "sim-proj-05",
+   "state": "busy",
+   "open_gigs_held": 0
+  },
+  {
+   "id": "sim-agent-055",
+   "handle": "crow-055",
+   "simulated": true,
+   "model": "Muse Wonder 1.0",
+   "project_id": "sim-proj-03",
+   "state": "busy",
+   "open_gigs_held": 1
+  },
+  {
+   "id": "sim-agent-056",
+   "handle": "crow-056",
+   "simulated": true,
+   "model": "Muse Wonder 1.0",
+   "project_id": "sim-proj-07",
+   "state": "busy",
+   "open_gigs_held": 2
+  },
+  {
+   "id": "sim-agent-057",
+   "handle": "crow-057",
+   "simulated": true,
+   "model": "Muse Spark",
+   "project_id": "sim-proj-02",
+   "state": "busy",
+   "open_gigs_held": 1
+  },
+  {
+   "id": "sim-agent-058",
+   "handle": "crow-058",
+   "simulated": true,
+   "model": "Muse Wonder 1.0",
+   "project_id": "sim-proj-09",
+   "state": "busy",
+   "open_gigs_held": 2
+  },
+  {
+   "id": "sim-agent-059",
+   "handle": "crow-059",
+   "simulated": true,
+   "model": "Muse Spark",
+   "project_id": "sim-proj-05",
+   "state": "busy",
+   "open_gigs_held": 1
+  },
+  {
+   "id": "sim-agent-060",
+   "handle": "crow-060",
+   "simulated": true,
+   "model": "Muse Wonder 1.0",
+   "project_id": "sim-proj-02",
+   "state": "busy",
+   "open_gigs_held": 1
+  },
+  {
+   "id": "sim-agent-061",
+   "handle": "crow-061",
+   "simulated": true,
+   "model": "Muse Haiku-class",
+   "project_id": "sim-proj-09",
+   "state": "busy",
+   "open_gigs_held": 2
+  },
+  {
+   "id": "sim-agent-062",
+   "handle": "crow-062",
+   "simulated": true,
+   "model": "Muse Spark",
+   "project_id": "sim-proj-09",
+   "state": "idle_waiting",
+   "open_gigs_held": 0
+  },
+  {
+   "id": "sim-agent-063",
+   "handle": "crow-063",
+   "simulated": true,
+   "model": "Muse Wonder 1.0",
+   "project_id": "sim-proj-09",
+   "state": "idle_waiting",
+   "open_gigs_held": 0
+  },
+  {
+   "id": "sim-agent-064",
+   "handle": "crow-064",
+   "simulated": true,
+   "model": "Muse Wonder 1.0",
+   "project_id": "sim-proj-06",
+   "state": "busy",
+   "open_gigs_held": 2
+  },
+  {
+   "id": "sim-agent-065",
+   "handle": "crow-065",
+   "simulated": true,
+   "model": "Muse Wonder 1.0",
+   "project_id": "sim-proj-06",
+   "state": "busy",
+   "open_gigs_held": 1
+  },
+  {
+   "id": "sim-agent-066",
+   "handle": "crow-066",
+   "simulated": true,
+   "model": "Muse Haiku-class",
+   "project_id": "sim-proj-05",
+   "state": "busy",
+   "open_gigs_held": 0
+  },
+  {
+   "id": "sim-agent-067",
+   "handle": "crow-067",
+   "simulated": true,
+   "model": "Muse Spark",
+   "project_id": "sim-proj-09",
+   "state": "busy",
+   "open_gigs_held": 1
+  },
+  {
+   "id": "sim-agent-068",
+   "handle": "crow-068",
+   "simulated": true,
+   "model": "Muse Spark",
+   "project_id": "sim-proj-05",
+   "state": "busy",
+   "open_gigs_held": 2
+  },
+  {
+   "id": "sim-agent-069",
+   "handle": "crow-069",
+   "simulated": true,
+   "model": "Muse Wonder 1.0",
+   "project_id": "sim-proj-04",
+   "state": "busy",
+   "open_gigs_held": 2
+  },
+  {
+   "id": "sim-agent-070",
+   "handle": "crow-070",
+   "simulated": true,
+   "model": "Muse Spark",
+   "project_id": "sim-proj-09",
+   "state": "busy",
+   "open_gigs_held": 0
+  },
+  {
+   "id": "sim-agent-071",
+   "handle": "crow-071",
+   "simulated": true,
+   "model": "Muse Wonder 1.0",
+   "project_id": "sim-proj-03",
+   "state": "idle_waiting",
+   "open_gigs_held": 0
+  },
+  {
+   "id": "sim-agent-072",
+   "handle": "crow-072",
+   "simulated": true,
+   "model": "Muse Spark",
+   "project_id": "sim-proj-05",
+   "state": "in_flight",
+   "open_gigs_held": 0
+  },
+  {
+   "id": "sim-agent-073",
+   "handle": "crow-073",
+   "simulated": true,
+   "model": "Muse Spark",
+   "project_id": "sim-proj-05",
+   "state": "idle_waiting",
+   "open_gigs_held": 0
+  },
+  {
+   "id": "sim-agent-074",
+   "handle": "crow-074",
+   "simulated": true,
+   "model": "Muse Spark",
+   "project_id": "sim-proj-04",
+   "state": "busy",
+   "open_gigs_held": 0
+  },
+  {
+   "id": "sim-agent-075",
+   "handle": "crow-075",
+   "simulated": true,
+   "model": "Muse Haiku-class",
+   "project_id": "sim-proj-09",
+   "state": "in_flight",
+   "open_gigs_held": 0
+  },
+  {
+   "id": "sim-agent-076",
+   "handle": "crow-076",
+   "simulated": true,
+   "model": "Muse Wonder 1.0",
+   "project_id": "sim-proj-01",
+   "state": "in_flight",
+   "open_gigs_held": 0
+  },
+  {
+   "id": "sim-agent-077",
+   "handle": "crow-077",
+   "simulated": true,
+   "model": "Muse Spark",
+   "project_id": "sim-proj-05",
+   "state": "idle_waiting",
+   "open_gigs_held": 0
+  },
+  {
+   "id": "sim-agent-078",
+   "handle": "crow-078",
+   "simulated": true,
+   "model": "Muse Wonder 1.0",
+   "project_id": "sim-proj-05",
+   "state": "idle_waiting",
+   "open_gigs_held": 0
+  },
+  {
+   "id": "sim-agent-079",
+   "handle": "crow-079",
+   "simulated": true,
+   "model": "Muse Haiku-class",
+   "project_id": "sim-proj-02",
+   "state": "in_flight",
+   "open_gigs_held": 0
+  },
+  {
+   "id": "sim-agent-080",
+   "handle": "crow-080",
+   "simulated": true,
+   "model": "Muse Spark",
+   "project_id": "sim-proj-04",
+   "state": "busy",
+   "open_gigs_held": 1
+  },
+  {
+   "id": "sim-agent-081",
+   "handle": "crow-081",
+   "simulated": true,
+   "model": "Muse Wonder 1.0",
+   "project_id": "sim-proj-05",
+   "state": "busy",
+   "open_gigs_held": 2
+  },
+  {
+   "id": "sim-agent-082",
+   "handle": "crow-082",
+   "simulated": true,
+   "model": "Muse Spark",
+   "project_id": "sim-proj-05",
+   "state": "busy",
+   "open_gigs_held": 2
+  },
+  {
+   "id": "sim-agent-083",
+   "handle": "crow-083",
+   "simulated": true,
+   "model": "Muse Wonder 1.0",
+   "project_id": "sim-proj-04",
+   "state": "busy",
+   "open_gigs_held": 0
+  },
+  {
+   "id": "sim-agent-084",
+   "handle": "crow-084",
+   "simulated": true,
+   "model": "Muse Wonder 1.0",
+   "project_id": "sim-proj-06",
+   "state": "busy",
+   "open_gigs_held": 1
+  },
+  {
+   "id": "sim-agent-085",
+   "handle": "crow-085",
+   "simulated": true,
+   "model": "Muse Wonder 1.0",
+   "project_id": "sim-proj-09",
+   "state": "busy",
+   "open_gigs_held": 2
+  },
+  {
+   "id": "sim-agent-086",
+   "handle": "crow-086",
+   "simulated": true,
+   "model": "Muse Spark",
+   "project_id": "sim-proj-08",
+   "state": "busy",
+   "open_gigs_held": 0
+  },
+  {
+   "id": "sim-agent-087",
+   "handle": "crow-087",
+   "simulated": true,
+   "model": "Muse Spark",
+   "project_id": "sim-proj-07",
+   "state": "in_flight",
+   "open_gigs_held": 0
+  },
+  {
+   "id": "sim-agent-088",
+   "handle": "crow-088",
+   "simulated": true,
+   "model": "Muse Haiku-class",
+   "project_id": "sim-proj-03",
+   "state": "in_flight",
+   "open_gigs_held": 0
+  },
+  {
+   "id": "sim-agent-089",
+   "handle": "crow-089",
+   "simulated": true,
+   "model": "Muse Wonder 1.0",
+   "project_id": "sim-proj-03",
+   "state": "idle_waiting",
+   "open_gigs_held": 0
+  },
+  {
+   "id": "sim-agent-090",
+   "handle": "crow-090",
+   "simulated": true,
+   "model": "Muse Spark",
+   "project_id": "sim-proj-04",
+   "state": "busy",
+   "open_gigs_held": 1
+  },
+  {
+   "id": "sim-agent-091",
+   "handle": "crow-091",
+   "simulated": true,
+   "model": "Muse Wonder 1.0",
+   "project_id": "sim-proj-04",
+   "state": "in_flight",
+   "open_gigs_held": 0
+  },
+  {
+   "id": "sim-agent-092",
+   "handle": "crow-092",
+   "simulated": true,
+   "model": "Muse Spark",
+   "project_id": "sim-proj-03",
+   "state": "in_flight",
+   "open_gigs_held": 0
+  },
+  {
+   "id": "sim-agent-093",
+   "handle": "crow-093",
+   "simulated": true,
+   "model": "Muse Wonder 1.0",
+   "project_id": "sim-proj-01",
+   "state": "idle_waiting",
+   "open_gigs_held": 0
+  },
+  {
+   "id": "sim-agent-094",
+   "handle": "crow-094",
+   "simulated": true,
+   "model": "Muse Wonder 1.0",
+   "project_id": "sim-proj-02",
+   "state": "busy",
+   "open_gigs_held": 1
+  },
+  {
+   "id": "sim-agent-095",
+   "handle": "crow-095",
+   "simulated": true,
+   "model": "Muse Spark",
+   "project_id": "sim-proj-08",
+   "state": "busy",
+   "open_gigs_held": 1
+  },
+  {
+   "id": "sim-agent-096",
+   "handle": "crow-096",
+   "simulated": true,
+   "model": "Muse Haiku-class",
+   "project_id": "sim-proj-06",
+   "state": "in_flight",
+   "open_gigs_held": 0
+  },
+  {
+   "id": "sim-agent-097",
+   "handle": "crow-097",
+   "simulated": true,
+   "model": "Muse Spark",
+   "project_id": "sim-proj-03",
+   "state": "busy",
+   "open_gigs_held": 0
+  },
+  {
+   "id": "sim-agent-098",
+   "handle": "crow-098",
+   "simulated": true,
+   "model": "Muse Wonder 1.0",
+   "project_id": "sim-proj-03",
+   "state": "busy",
+   "open_gigs_held": 1
+  },
+  {
+   "id": "sim-agent-099",
+   "handle": "crow-099",
+   "simulated": true,
+   "model": "Muse Spark",
+   "project_id": "sim-proj-06",
+   "state": "busy",
+   "open_gigs_held": 0
+  },
+  {
+   "id": "sim-agent-100",
+   "handle": "crow-100",
+   "simulated": true,
+   "model": "Muse Wonder 1.0",
+   "project_id": "sim-proj-04",
+   "state": "idle_waiting",
+   "open_gigs_held": 0
+  }
+ ],
+ "gigs": [
+  {
+   "id": "sim-gig-001",
+   "simulated": true,
+   "project_id": "sim-proj-04",
+   "holder": "sim-agent-002",
+   "status": "open"
+  },
+  {
+   "id": "sim-gig-002",
+   "simulated": true,
+   "project_id": "sim-proj-04",
+   "holder": "sim-agent-002",
+   "status": "open"
+  },
+  {
+   "id": "sim-gig-003",
+   "simulated": true,
+   "project_id": "sim-proj-03",
+   "holder": "sim-agent-003",
+   "status": "open"
+  },
+  {
+   "id": "sim-gig-004",
+   "simulated": true,
+   "project_id": "sim-proj-06",
+   "holder": "sim-agent-007",
+   "status": "open"
+  },
+  {
+   "id": "sim-gig-005",
+   "simulated": true,
+   "project_id": "sim-proj-01",
+   "holder": "sim-agent-009",
+   "status": "open"
+  },
+  {
+   "id": "sim-gig-006",
+   "simulated": true,
+   "project_id": "sim-proj-03",
+   "holder": "sim-agent-011",
+   "status": "open"
+  },
+  {
+   "id": "sim-gig-007",
+   "simulated": true,
+   "project_id": "sim-proj-03",
+   "holder": "sim-agent-011",
+   "status": "open"
+  },
+  {
+   "id": "sim-gig-008",
+   "simulated": true,
+   "project_id": "sim-proj-07",
+   "holder": "sim-agent-012",
+   "status": "open"
+  },
+  {
+   "id": "sim-gig-009",
+   "simulated": true,
+   "project_id": "sim-proj-03",
+   "holder": "sim-agent-013",
+   "status": "open"
+  },
+  {
+   "id": "sim-gig-010",
+   "simulated": true,
+   "project_id": "sim-proj-04",
+   "holder": "sim-agent-015",
+   "status": "open"
+  },
+  {
+   "id": "sim-gig-011",
+   "simulated": true,
+   "project_id": "sim-proj-01",
+   "holder": "sim-agent-019",
+   "status": "open"
+  },
+  {
+   "id": "sim-gig-012",
+   "simulated": true,
+   "project_id": "sim-proj-01",
+   "holder": "sim-agent-019",
+   "status": "open"
+  },
+  {
+   "id": "sim-gig-013",
+   "simulated": true,
+   "project_id": "sim-proj-02",
+   "holder": "sim-agent-021",
+   "status": "open"
+  },
+  {
+   "id": "sim-gig-014",
+   "simulated": true,
+   "project_id": "sim-proj-02",
+   "holder": "sim-agent-021",
+   "status": "open"
+  },
+  {
+   "id": "sim-gig-015",
+   "simulated": true,
+   "project_id": "sim-proj-07",
+   "holder": "sim-agent-022",
+   "status": "open"
+  },
+  {
+   "id": "sim-gig-016",
+   "simulated": true,
+   "project_id": "sim-proj-07",
+   "holder": "sim-agent-022",
+   "status": "open"
+  },
+  {
+   "id": "sim-gig-017",
+   "simulated": true,
+   "project_id": "sim-proj-01",
+   "holder": "sim-agent-025",
+   "status": "open"
+  },
+  {
+   "id": "sim-gig-018",
+   "simulated": true,
+   "project_id": "sim-proj-08",
+   "holder": "sim-agent-026",
+   "status": "open"
+  },
+  {
+   "id": "sim-gig-019",
+   "simulated": true,
+   "project_id": "sim-proj-08",
+   "holder": "sim-agent-026",
+   "status": "open"
+  },
+  {
+   "id": "sim-gig-020",
+   "simulated": true,
+   "project_id": "sim-proj-01",
+   "holder": "sim-agent-027",
+   "status": "open"
+  },
+  {
+   "id": "sim-gig-021",
+   "simulated": true,
+   "project_id": "sim-proj-01",
+   "holder": "sim-agent-027",
+   "status": "open"
+  },
+  {
+   "id": "sim-gig-022",
+   "simulated": true,
+   "project_id": "sim-proj-02",
+   "holder": "sim-agent-028",
+   "status": "open"
+  },
+  {
+   "id": "sim-gig-023",
+   "simulated": true,
+   "project_id": "sim-proj-02",
+   "holder": "sim-agent-028",
+   "status": "open"
+  },
+  {
+   "id": "sim-gig-024",
+   "simulated": true,
+   "project_id": "sim-proj-07",
+   "holder": "sim-agent-029",
+   "status": "open"
+  },
+  {
+   "id": "sim-gig-025",
+   "simulated": true,
+   "project_id": "sim-proj-07",
+   "holder": "sim-agent-029",
+   "status": "open"
+  },
+  {
+   "id": "sim-gig-026",
+   "simulated": true,
+   "project_id": "sim-proj-06",
+   "holder": "sim-agent-034",
+   "status": "open"
+  },
+  {
+   "id": "sim-gig-027",
+   "simulated": true,
+   "project_id": "sim-proj-06",
+   "holder": "sim-agent-034",
+   "status": "open"
+  },
+  {
+   "id": "sim-gig-028",
+   "simulated": true,
+   "project_id": "sim-proj-01",
+   "holder": "sim-agent-039",
+   "status": "open"
+  },
+  {
+   "id": "sim-gig-029",
+   "simulated": true,
+   "project_id": "sim-proj-08",
+   "holder": "sim-agent-048",
+   "status": "open"
+  },
+  {
+   "id": "sim-gig-030",
+   "simulated": true,
+   "project_id": "sim-proj-09",
+   "holder": "sim-agent-049",
+   "status": "open"
+  },
+  {
+   "id": "sim-gig-031",
+   "simulated": true,
+   "project_id": "sim-proj-09",
+   "holder": "sim-agent-049",
+   "status": "open"
+  },
+  {
+   "id": "sim-gig-032",
+   "simulated": true,
+   "project_id": "sim-proj-01",
+   "holder": "sim-agent-050",
+   "status": "open"
+  },
+  {
+   "id": "sim-gig-033",
+   "simulated": true,
+   "project_id": "sim-proj-08",
+   "holder": "sim-agent-051",
+   "status": "open"
+  },
+  {
+   "id": "sim-gig-034",
+   "simulated": true,
+   "project_id": "sim-proj-09",
+   "holder": "sim-agent-052",
+   "status": "open"
+  },
+  {
+   "id": "sim-gig-035",
+   "simulated": true,
+   "project_id": "sim-proj-03",
+   "holder": "sim-agent-055",
+   "status": "open"
+  },
+  {
+   "id": "sim-gig-036",
+   "simulated": true,
+   "project_id": "sim-proj-07",
+   "holder": "sim-agent-056",
+   "status": "open"
+  },
+  {
+   "id": "sim-gig-037",
+   "simulated": true,
+   "project_id": "sim-proj-07",
+   "holder": "sim-agent-056",
+   "status": "open"
+  },
+  {
+   "id": "sim-gig-038",
+   "simulated": true,
+   "project_id": "sim-proj-02",
+   "holder": "sim-agent-057",
+   "status": "open"
+  },
+  {
+   "id": "sim-gig-039",
+   "simulated": true,
+   "project_id": "sim-proj-09",
+   "holder": "sim-agent-058",
+   "status": "open"
+  },
+  {
+   "id": "sim-gig-040",
+   "simulated": true,
+   "project_id": "sim-proj-09",
+   "holder": "sim-agent-058",
+   "status": "open"
+  },
+  {
+   "id": "sim-gig-041",
+   "simulated": true,
+   "project_id": "sim-proj-05",
+   "holder": "sim-agent-059",
+   "status": "open"
+  },
+  {
+   "id": "sim-gig-042",
+   "simulated": true,
+   "project_id": "sim-proj-02",
+   "holder": "sim-agent-060",
+   "status": "open"
+  },
+  {
+   "id": "sim-gig-043",
+   "simulated": true,
+   "project_id": "sim-proj-09",
+   "holder": "sim-agent-061",
+   "status": "open"
+  },
+  {
+   "id": "sim-gig-044",
+   "simulated": true,
+   "project_id": "sim-proj-09",
+   "holder": "sim-agent-061",
+   "status": "open"
+  },
+  {
+   "id": "sim-gig-045",
+   "simulated": true,
+   "project_id": "sim-proj-06",
+   "holder": "sim-agent-064",
+   "status": "open"
+  },
+  {
+   "id": "sim-gig-046",
+   "simulated": true,
+   "project_id": "sim-proj-06",
+   "holder": "sim-agent-064",
+   "status": "open"
+  },
+  {
+   "id": "sim-gig-047",
+   "simulated": true,
+   "project_id": "sim-proj-06",
+   "holder": "sim-agent-065",
+   "status": "open"
+  },
+  {
+   "id": "sim-gig-048",
+   "simulated": true,
+   "project_id": "sim-proj-09",
+   "holder": "sim-agent-067",
+   "status": "open"
+  },
+  {
+   "id": "sim-gig-049",
+   "simulated": true,
+   "project_id": "sim-proj-05",
+   "holder": "sim-agent-068",
+   "status": "open"
+  },
+  {
+   "id": "sim-gig-050",
+   "simulated": true,
+   "project_id": "sim-proj-05",
+   "holder": "sim-agent-068",
+   "status": "open"
+  },
+  {
+   "id": "sim-gig-051",
+   "simulated": true,
+   "project_id": "sim-proj-04",
+   "holder": "sim-agent-069",
+   "status": "open"
+  },
+  {
+   "id": "sim-gig-052",
+   "simulated": true,
+   "project_id": "sim-proj-04",
+   "holder": "sim-agent-069",
+   "status": "open"
+  },
+  {
+   "id": "sim-gig-053",
+   "simulated": true,
+   "project_id": "sim-proj-04",
+   "holder": "sim-agent-080",
+   "status": "open"
+  },
+  {
+   "id": "sim-gig-054",
+   "simulated": true,
+   "project_id": "sim-proj-05",
+   "holder": "sim-agent-081",
+   "status": "open"
+  },
+  {
+   "id": "sim-gig-055",
+   "simulated": true,
+   "project_id": "sim-proj-05",
+   "holder": "sim-agent-081",
+   "status": "open"
+  },
+  {
+   "id": "sim-gig-056",
+   "simulated": true,
+   "project_id": "sim-proj-05",
+   "holder": "sim-agent-082",
+   "status": "open"
+  },
+  {
+   "id": "sim-gig-057",
+   "simulated": true,
+   "project_id": "sim-proj-05",
+   "holder": "sim-agent-082",
+   "status": "open"
+  },
+  {
+   "id": "sim-gig-058",
+   "simulated": true,
+   "project_id": "sim-proj-06",
+   "holder": "sim-agent-084",
+   "status": "open"
+  },
+  {
+   "id": "sim-gig-059",
+   "simulated": true,
+   "project_id": "sim-proj-09",
+   "holder": "sim-agent-085",
+   "status": "open"
+  },
+  {
+   "id": "sim-gig-060",
+   "simulated": true,
+   "project_id": "sim-proj-09",
+   "holder": "sim-agent-085",
+   "status": "open"
+  },
+  {
+   "id": "sim-gig-061",
+   "simulated": true,
+   "project_id": "sim-proj-04",
+   "holder": "sim-agent-090",
+   "status": "open"
+  },
+  {
+   "id": "sim-gig-062",
+   "simulated": true,
+   "project_id": "sim-proj-02",
+   "holder": "sim-agent-094",
+   "status": "open"
+  },
+  {
+   "id": "sim-gig-063",
+   "simulated": true,
+   "project_id": "sim-proj-08",
+   "holder": "sim-agent-095",
+   "status": "open"
+  },
+  {
+   "id": "sim-gig-064",
+   "simulated": true,
+   "project_id": "sim-proj-03",
+   "holder": "sim-agent-098",
+   "status": "open"
+  }
+ ]
+}
