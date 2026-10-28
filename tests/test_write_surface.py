@@ -129,6 +129,103 @@ def test_submit_proposal_refused_when_work_not_discovered(actor_store):
     assert client.writes() == []
 
 
+def _live_projection(items):
+    """Observed public-work-v1 structure; all values are offline fixtures."""
+    return {
+        "schema_version": "crowsnest-public-work-v1",
+        "cash_value": False,
+        "cashout_available": False,
+        "counts": {"public_work": len(items) if isinstance(items, list) else 0},
+        "credit_unit": "TEST ERG",
+        "freshness": "current",
+        "generated_at": "2026-10-27T00:00:00+00:00",
+        "items": items,
+    }
+
+
+def _live_item(ref=REF):
+    return {
+        "id": ref,
+        "title": "Offline fixture work",
+        "description": "Synthetic adapter test, not a real commission.",
+        "observed": {"as_of": "2026-10-27T00:00:00Z", "state": "posted"},
+        "quote": {"amount": 300, "kind": "quote_not_payment", "unit": "TEST ERG"},
+        "reported": "300",
+        "artifact_url": None,
+        "buyer": None,
+        "worker": None,
+        "verified": None,
+    }
+
+
+def test_submit_proposal_accepts_live_items_projection(actor_store):
+    from crowsnest_muse_worker.service import WorkReadService
+
+    projection = _live_projection([
+        _live_item("work_ffffffffffffffff"), _live_item()])
+    client = FakeWriteClient(projection=projection)
+    # Discovery is already a passthrough; its returned id must also pass
+    # the proposal preflight without rewriting the projection or reference.
+    discovered = WorkReadService(Settings(), client).discover_work()
+    assert discovered is projection
+    client.calls.clear()
+    result = _svc(actor_store, client).submit_proposal(
+        discovered["items"][1]["id"], scope="write a demo note",
+        budget_test_erg=300, eta="48h")
+    assert result == {}
+    (kind, action, envelope), = client.writes()
+    assert (kind, action) == ("write", "submit_proposal")
+    assert envelope["body"]["role"] == "worker"
+    assert envelope["body"]["account_id"] == "acct-test-1"
+    assert envelope["body"]["params"] == {
+        "work_ref": REF, "scope": "write a demo note",
+        "budget_test_erg": 300, "eta": "48h"}
+    assert [c[0] for c in client.calls] == ["projection", "write"]
+
+
+@pytest.mark.parametrize("items", [
+    "not-a-list",
+    {"id": REF},
+    None,
+    [],
+    [REF],
+    [{"title": "no id"}],
+    [{"id": 42}],
+    [{"work_ref": REF}],  # legacy entry key is not valid under items
+    [_live_item("work_ffffffffffffffff")],
+])
+@pytest.mark.parametrize("legacy_present", [False, True])
+def test_submit_proposal_live_items_fail_closed(
+        actor_store, monkeypatch, items, legacy_present):
+    import crowsnest_muse_worker.write_service as ws
+
+    def unexpected_store_load(path):
+        pytest.fail("rejected discovery must not load an actor store or sign")
+
+    monkeypatch.setattr(ws, "load_actor_store", unexpected_store_load)
+    projection = _live_projection(items)
+    if legacy_present:
+        # Present items is authoritative: malformed, empty or unmatched
+        # items must never be rescued by a matching legacy entry.
+        projection["gigs"] = [{"work_ref": REF}]
+    client = FakeWriteClient(projection=projection)
+    with pytest.raises(WrongStateError):
+        _svc(actor_store, client).submit_proposal(
+            REF, scope="s", budget_test_erg=300, eta="48h")
+    assert client.writes() == []
+    assert client.calls == [("projection",)]
+
+
+def test_submit_proposal_matching_items_takes_precedence_over_gigs(actor_store):
+    projection = _live_projection([_live_item()])
+    projection["gigs"] = [{"work_ref": "work_ffffffffffffffff"}]
+    client = FakeWriteClient(projection=projection)
+    _svc(actor_store, client).submit_proposal(
+        REF, scope="s", budget_test_erg=300, eta="48h")
+    assert len(client.writes()) == 1
+    assert [c[0] for c in client.calls] == ["projection", "write"]
+
+
 @pytest.mark.parametrize("projection", [
     {},                                   # empty object: no gigs at all
     {"gigs": "not-a-list"},

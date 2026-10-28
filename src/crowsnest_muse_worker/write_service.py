@@ -143,17 +143,28 @@ class WorkWriteService:
             raise InvalidInputError("budget_test_erg must be a positive integer")
         self._require_worker_role()
         projection = self._client.public_projection()
-        # Fail closed: only a recognized projection container -- an
-        # object with a list-valued ``gigs`` -- can establish discovery.
-        # Any other shape (including ``{}``) authorizes nothing.
-        if not isinstance(projection, dict) \
-                or not isinstance(projection.get("gigs"), list):
+        # Fail closed: only a recognized projection container can
+        # establish discovery. Two shapes are recognized:
+        #   * live ``crowsnest-public-work-v1``: a list-valued ``items``
+        #     whose entries carry the work ref under ``id``;
+        #   * legacy: a list-valued ``gigs`` whose entries carry it
+        #     under ``work_ref``.
+        # A present-but-malformed ``items`` does not fall through to
+        # ``gigs``. Any other shape (including ``{}``) authorizes
+        # nothing, as does a well-formed shape without the requested ref.
+        if not isinstance(projection, dict):
+            entries, id_key = None, None
+        elif "items" in projection:
+            entries, id_key = projection.get("items"), "id"
+        else:
+            entries, id_key = projection.get("gigs"), "work_ref"
+        if not isinstance(entries, list):
             raise WrongStateError(
                 "public projection is unrecognized (no list-valued "
-                "'gigs'); refusing to propose against undiscovered work")
-        entries = projection["gigs"]
+                "'items' or 'gigs'); refusing to propose against "
+                "undiscovered work")
         if not any(
-                isinstance(e, dict) and e.get("work_ref") == ref for e in entries):
+                isinstance(e, dict) and e.get(id_key) == ref for e in entries):
             raise WrongStateError(
                 "work_ref %s is not in the discovered public work; "
                 "refusing to propose against undiscovered work" % ref)
